@@ -173,6 +173,11 @@
   }
 }</component>
   <component name="RunManager" selected="OpenOCD Download &amp; Run.foc.elf">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="foc.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="foc" TARGET_NAME="foc.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="foc" RUN_TARGET_NAME="foc.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -271,11 +276,19 @@
       <workItem from="1709551951730" duration="6499000" />
       <workItem from="1709613964501" duration="988000" />
       <workItem from="1709633714570" duration="7878000" />
+      <workItem from="1709713456226" duration="11229000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="com.jetbrains.cidr.embedded.openocd.conf.type">
+        <watch expression="motor1" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
