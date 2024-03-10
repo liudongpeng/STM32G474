@@ -32,7 +32,7 @@ typedef enum
     MOTOR_STATUS_START,
     MOTOR_STATUS_RUN,
     MOTOR_STATUS_STOP,
-    MOTOR_STATUS_BRAKE,
+    MOTOR_STATUS_CALIB_ENCODER,
     MOTOR_STATUS_WAIT,
     MOTOR_STATUS_FAULT,
 } motor_status_t;
@@ -57,7 +57,7 @@ typedef struct motor
     float VBus, IBus;
     float ua, ub, uc;
     float ia, ib, ic;
-    float ialpha, ibeta;
+    float ialpha, ibeta, ialphaLast, ibetaLast;
     float id, iq, idLast, iqLast;
     float ud, uq;
     float ualpha, ubeta;
@@ -69,12 +69,12 @@ typedef struct motor
     /* Current loop param. */
     pid_ctrl_t idPid;
     pid_ctrl_t iqPid;
-    float idSet, iqSet;
+    float idRef, iqRef;
     int currentLoopFreq;
 
     /* Speed loop param. */
     pid_ctrl_t speedPid;
-    float speedSet, speedShadow;
+    float speedRef, speedShadow;
     float speedRampTime;
     float speedAcc;
     bool isUseSpeedRamp;
@@ -82,7 +82,7 @@ typedef struct motor
 
     /* Position loop param. */
     pid_ctrl_t positionPid;
-    float positionSet;
+    float positionRef;
     int positionLoopFreq, positionLoopCnt;
 
     /* PWM */
@@ -99,15 +99,18 @@ typedef struct motor
     int encoderRawData, encoderOffset;
     float angle, angleRad, angleRadOffset, theta, speedRpm;
     float sinTheta, cosTheta;
-    lpf_t speedLdFilter;
     foc_pll_t speedPll;
 
     /* HFI */
     float hfiVoltAmpl;
-    float hfiTheta;
+    float hfiTheta, hfiThetaDiff, hfiSpeedRpm, hfiThetaEst, hfiSpeedEst;
+    float hfiUd;
     float hfiId, hfiIq;
-    float hfiIdLast, hfiIqLast;
+    float hfiIalpha, hfiIbeta, hfiIalphaLast, hfiIbetaLast;
+    float hfiIalphaDiff, hfiIbetaDiff, hfiIalphaEnvelope, hfiIbetaEnvelope;
+    hfi_pll_t hfiPll;
     pid_ctrl_t hfiPid;
+    lpf_t hfiSpeedEstLpf;
 
     /* motor param */
     int polePairs;
@@ -142,8 +145,11 @@ float motor_get_angle(motor_t* motor);
 
 void motor_set_and_apply_pwm_duty(motor_t* motor, float ta, float tb, float tc);
 
-void motor_set_id_set(motor_t* motor, float idSet);
-void motor_set_iq_set(motor_t* motor, float iqSet);
+void motor_set_id_ref(motor_t* motor, float idRef);
+void motor_set_iq_ref(motor_t* motor, float iqRef);
+
+void motor_set_id(motor_t* motor, float id);
+void motor_set_iq(motor_t* motor, float iq);
 
 
 float motor_get_elec_angle(motor_t* motor);
@@ -160,18 +166,19 @@ int odriver_current_pi_ctrl(motor_t* motor);
 int motor_current_closed_loop(motor_t *motor);
 
 
-void motor_set_speed(motor_t *motor, float speedSet);
-int motor_speed_closed_loop(motor_t *motor, float speedSet, float* iqSet);
+void motor_set_speed(motor_t *motor, float speedRef);
+int motor_speed_closed_loop(motor_t *motor, float speedRef, float* iqRef);
 void motor_set_speed_ramp_time(motor_t *motor, float speedRampTime);
 void motor_set_speed_acc(motor_t *motor, float speedAcc);
 
 
-int motor_position_closed_loop(motor_t *motor, float posSet, float* speedSet);
+int motor_position_closed_loop(motor_t *motor, float posRef, float* speedRef);
 
 int motor_meas_phase_resistance(motor_t *motor);
 int motor_meas_phase_resistance2(motor_t *motor);
 
 
+int motor_hfi_pll_calc(motor_t* motor, float thetaErr);
 
 
 #endif //FOC_MOTOR_H

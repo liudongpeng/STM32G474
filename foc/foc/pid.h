@@ -20,9 +20,10 @@ typedef struct pid_ctrl
     float outLowLimit, outUpLimit;
 
     float lastErr, clampErr;
-    float ti;
     float integral, integralMax;
     float saturation;
+
+    float ts;
 
     float output;
 
@@ -34,8 +35,9 @@ int pid_ctrl_set_limit(pid_ctrl_t* pid, float lowLimit, float upLimit);
 
 
 
-int anti_windup_pi_ctrl(pid_ctrl_t* pid, float set, float feedback, float* output);
+int anti_windup_pi_ctrl(pid_ctrl_t* pid, float ref, float fbk, float* output);
 int position_pid_ctrl(pid_ctrl_t* pid, float set, float feedback, float* output);
+int pi_ctrl(pid_ctrl_t* pid, float err, float* output);
 
 
 #endif //FOC_PID_H

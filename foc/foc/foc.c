@@ -6,6 +6,7 @@
 #include "arm_math.h"
 #include "utils.h"
 
+
 /**
  * @brief Clark transform
  * @param[in]   ia
@@ -273,7 +274,8 @@ int odriver_svm(float ualpha, float ubeta, float *ta, float *tb, float *tc, int 
                 Sextant = 2; //sextant v2-v3
             else
                 Sextant = 1; //sextant v1-v2
-        } else
+        }
+        else
         {
             //quadrant II
             if (-one_by_sqrt3 * beta > alpha)
@@ -281,7 +283,8 @@ int odriver_svm(float ualpha, float ubeta, float *ta, float *tb, float *tc, int 
             else
                 Sextant = 2; //sextant v2-v3
         }
-    } else
+    }
+    else
     {
         if (alpha >= 0.0f)
         {
@@ -290,7 +293,8 @@ int odriver_svm(float ualpha, float ubeta, float *ta, float *tb, float *tc, int 
                 Sextant = 5; //sextant v5-v6
             else
                 Sextant = 6; //sextant v6-v1
-        } else
+        }
+        else
         {
             //quadrant III
             if (one_by_sqrt3 * beta > alpha)
@@ -434,7 +438,7 @@ int foc_pll_init(foc_pll_t *pll, float p, float i, float d, float ka, float lowL
     pll->pid.outLowLimit = lowLimit;
     pll->pid.outUpLimit = upLimit;
 
-    pll->pid.ti = 1.0f / 20000.0f;
+    pll->pid.ts = 1.0f / 20000.0f;
 
     return 0;
 }
@@ -454,4 +458,55 @@ int foc_pll_calc(foc_pll_t *pll, int rawAngle)
 
     return 0;
 }
+
+
+/**
+ *
+ * @param pll
+ * @param alpha
+ * @param beta
+ * @param thetaErr
+ * @param weEst
+ * @param thetaEst
+ * @return
+ */
+int hfi_pll_calc(hfi_pll_t *pll, float alpha, float beta, float thetaErr, float *weEst, float *thetaEst)
+{
+    int ret = 0;
+
+    if (pll == NULL)
+        return -1;
+
+    pid_ctrl_t *pi = &pll->pid;
+
+    float err = beta * arm_cos_f32(thetaErr) - alpha * arm_sin_f32(thetaErr);
+
+    float we = pi->kp * err + pi->integral;
+
+
+    if (thetaEst)
+        *thetaEst = pll->integral;
+
+    if (weEst)
+        *weEst = we;
+
+    if (pll->integral >= M_TWOPI)
+    {
+        pll->integral -= M_TWOPI;
+    }
+    else if (pll->integral < 0)
+    {
+        pll->integral += M_TWOPI;
+    }
+    else
+    {}
+
+    pi->integral += pi->ki * err * pi->ts;
+    pll->integral += we * (1.0f / 20000.0f);
+
+    return ret;
+}
+
+
+
 

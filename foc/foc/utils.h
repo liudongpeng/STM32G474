@@ -33,5 +33,8 @@ float LeastSquareLinearFit(int y[], const int num, float *a, float *b);
 
 int GetCurrentAbsTotalValue(int lValue);
 
+int sign(float val);
+
+
 
 #endif //FOC_UTILS_H

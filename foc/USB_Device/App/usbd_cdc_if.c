@@ -340,12 +340,12 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
     else if (strstr(vofaCmdBuf, "iqref="))
     {
         float iqref = vofa_cmd_parse(vofaCmdBuf, "iqref=");
-        motor1.iqSet = iqref;
+        motor1.iqRef = iqref;
     }
     else if (strstr(vofaCmdBuf, "idref="))
     {
         float idref = vofa_cmd_parse(vofaCmdBuf, "idref=");
-        motor1.idSet = idref;
+        motor1.idRef = idref;
     }
     else if (strstr(vofaCmdBuf, "radOffset="))
     {
@@ -355,7 +355,7 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
     else if (strstr(vofaCmdBuf, "velref="))
     {
         float val = vofa_cmd_parse(vofaCmdBuf, "velref=");
-        motor1.speedSet = val;
+        motor1.speedRef = val;
     }
     else if (strstr(vofaCmdBuf, "velkp="))
     {
@@ -376,7 +376,7 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
     else if (strstr(vofaCmdBuf, "pos_ref="))
     {
         float val = vofa_cmd_parse(vofaCmdBuf, "pos_ref=");
-        motor1.positionSet = val;
+        motor1.positionRef = val;
     }
     else if (strstr(vofaCmdBuf, "pos_kp="))
     {

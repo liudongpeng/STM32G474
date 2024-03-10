@@ -64,7 +64,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 
-#define CH_COUNT 34
+#define CH_COUNT 40
 struct Frame
 {
     float fdata[CH_COUNT];
@@ -126,8 +126,9 @@ static void bsp_btn_event_callback(void *btn, int event)
     {
         if (motor1.status != MOTOR_STATUS_RUN)
         {
+            motor_set_status(&motor1, MOTOR_STATUS_CALIB_ENCODER);
             motor_align_encoder(&motor1, 0.5f, 0);
-//        motor_calib_encoder(&motor1, 0.7f);
+            motor_set_status(&motor1, MOTOR_STATUS_STOP);
         }
     }
     else if (btn == &btn4)
@@ -339,33 +340,13 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
     {
         HAL_GPIO_WritePin(UserTest_GPIO_Port, UserTest_Pin, GPIO_PIN_SET);
 
-        /* Get phase current. */
-        motor1.get_phase_current(&motor1);
-//        motor1.ia = lpf_work(&motor1.iaLpFilter, motor1.ia);
-//        motor1.ib = lpf_work(&motor1.ibLpFilter, motor1.ib);
-
-        /* Get theta. */
-        if (!motor1.sensorless)
-        {
-            motor_get_elec_angle(&motor1);
-        }
-        else
-        {
-            motor1.sinTheta = arm_sin_f32(motor1.hfiTheta);
-            motor1.cosTheta = arm_cos_f32(motor1.hfiTheta);
-        }
-
-        /* Calc speed. */
-        foc_pll_calc(&motor1.speedPll, motor1.encoderRawData);
-        motor1.speedRpm = motor1.speedPll.speed * 20000 * 60.0f;
-
         motor_status_loop(&motor1);
 
         /* Vofa debug. */
         int dataIndex = 0;
         vfoaFrame.fdata[dataIndex++] = motor1.ia;
         vfoaFrame.fdata[dataIndex++] = motor1.ib;
-        vfoaFrame.fdata[dataIndex++] = motor1.ialpha;
+        vfoaFrame.fdata[dataIndex++] = (float) motor1.encoderRawData;
         vfoaFrame.fdata[dataIndex++] = motor1.ibeta;
         vfoaFrame.fdata[dataIndex++] = motor1.VBus;
         vfoaFrame.fdata[dataIndex++] = (float) motor1.angleRadOffset;
@@ -377,22 +358,22 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
 
         vfoaFrame.fdata[dataIndex++] = motor1.iqPid.kp;
         vfoaFrame.fdata[dataIndex++] = motor1.iqPid.ki;
-        vfoaFrame.fdata[dataIndex++] = motor1.iqSet;
+        vfoaFrame.fdata[dataIndex++] = motor1.iqRef;
         vfoaFrame.fdata[dataIndex++] = motor1.iq;
 
         vfoaFrame.fdata[dataIndex++] = motor1.idPid.kp;
         vfoaFrame.fdata[dataIndex++] = motor1.idPid.ki;
-        vfoaFrame.fdata[dataIndex++] = motor1.idSet;
+        vfoaFrame.fdata[dataIndex++] = motor1.idRef;
         vfoaFrame.fdata[dataIndex++] = motor1.id;
 
         vfoaFrame.fdata[dataIndex++] = motor1.speedPid.kp;
         vfoaFrame.fdata[dataIndex++] = motor1.speedPid.ki;
-        vfoaFrame.fdata[dataIndex++] = motor1.speedSet;
+        vfoaFrame.fdata[dataIndex++] = motor1.speedRef;
         vfoaFrame.fdata[dataIndex++] = motor1.speedRpm;
 
         vfoaFrame.fdata[dataIndex++] = motor1.positionPid.kp;
         vfoaFrame.fdata[dataIndex++] = motor1.positionPid.ki;
-        vfoaFrame.fdata[dataIndex++] = motor1.positionSet;
+        vfoaFrame.fdata[dataIndex++] = motor1.positionRef;
         vfoaFrame.fdata[dataIndex++] = motor1.angle;
 
         vfoaFrame.fdata[dataIndex++] = motor1.uq;
@@ -401,8 +382,16 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
         vfoaFrame.fdata[dataIndex++] = motor1.hfiVoltAmpl;
 
         /* HFI */
-        vfoaFrame.fdata[dataIndex++] = motor1.hfiIq;
-        vfoaFrame.fdata[dataIndex++] = motor1.hfiId;
+        vfoaFrame.fdata[dataIndex++] = motor1.ialpha;
+        vfoaFrame.fdata[dataIndex++] = motor1.ibeta;
+        vfoaFrame.fdata[dataIndex++] = motor1.hfiIalpha;
+        vfoaFrame.fdata[dataIndex++] = motor1.hfiIbeta;
+        vfoaFrame.fdata[dataIndex++] = motor1.theta;
+        vfoaFrame.fdata[dataIndex++] = motor1.hfiTheta;
+        vfoaFrame.fdata[dataIndex++] = motor1.hfiIalphaEnvelope;
+        vfoaFrame.fdata[dataIndex++] = motor1.hfiIbetaEnvelope;
+        vfoaFrame.fdata[dataIndex++] = motor1.uq;
+        vfoaFrame.fdata[dataIndex++] = motor1.ud;
 
         HAL_UART_Transmit_DMA(&huart3, (uint8_t *) (&vfoaFrame), sizeof(vfoaFrame));
 //        CDC_Transmit_FS((uint8_t *) (&vfoaFrame), sizeof(vfoaFrame));
@@ -474,12 +463,12 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
         else if (strstr(vofaCmdBuf, "iqref="))
         {
             float iqref = vofa_cmd_parse(vofaCmdBuf, "iqref=");
-            motor1.iqSet = iqref;
+            motor_set_iq_ref(&motor1, iqref);
         }
         else if (strstr(vofaCmdBuf, "idref="))
         {
             float idref = vofa_cmd_parse(vofaCmdBuf, "idref=");
-            motor1.idSet = idref;
+            motor_set_id_ref(&motor1, idref);
         }
         else if (strstr(vofaCmdBuf, "radOffset="))
         {
@@ -489,7 +478,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
         else if (strstr(vofaCmdBuf, "velref="))
         {
             float val = vofa_cmd_parse(vofaCmdBuf, "velref=");
-            motor1.speedSet = val;
+            motor1.speedRef = val;
         }
         else if (strstr(vofaCmdBuf, "velkp="))
         {
@@ -504,7 +493,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
         else if (strstr(vofaCmdBuf, "pos_ref="))
         {
             float val = vofa_cmd_parse(vofaCmdBuf, "pos_ref=");
-            motor1.positionSet = val;
+            motor1.positionRef = val;
         }
         else if (strstr(vofaCmdBuf, "pos_kp="))
         {

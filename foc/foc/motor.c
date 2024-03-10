@@ -23,20 +23,46 @@ int motor_create(motor_t *motor)
     motor->speedLoopFreq = 5000;
     motor->positionLoopFreq = 1000;
 
+    /* HFI 参数 */
+    motor->hfiVoltAmpl = 0.5f;
+    motor->sensorless = true;
+    pid_ctrl_init(&motor->hfiPll.pid, 3000.0f, 30000.0f, 0, 0, -2000.0f, 2000.0f);
+    lpf_init(&motor->hfiSpeedEstLpf, 100.0f, 1.0f / 20000.0f);
+
+    /* 电机控制模式 */
     motor_set_ctrl_mode(motor, MOTOR_CTRL_MODE_CURRENT);
-    motor_set_ctrl_mode(motor, MOTOR_CTRL_MODE_CURRENT_SPEED);
+//    motor_set_ctrl_mode(motor, MOTOR_CTRL_MODE_CURRENT_SPEED);
 //    motor_set_ctrl_mode(motor, MOTOR_CTRL_MODE_VOLT_ENCODER);
+//    motor_set_ctrl_mode(motor, MOTOR_CTRL_MODE_VOLT_ANGLE_INC);
     motor_set_status(motor, MOTOR_STATUS_STOP);
 
-    motor_set_speed(motor, 30.0f);
+    motor_set_speed(motor, 60.0f);
 
-    motor->sensorless = false;
 
-    motor->hfiVoltAmpl = 0.7f;
     motor->VBus = 12.0f;
-
     motor->timArr = FOC_TIM1_ARR;
     motor->encoderCpr = 16384;
+
+    // ZD2808航模电机
+    if (true)
+    {
+        motor->encoderDir = -1;
+        motor->angleRadOffset = 6.250972f;
+        motor->polePairs = 7;
+        motor->Rs = 105.5f / 1000.0f;
+        motor->Ld = 33.21f / 1e6f;
+    }
+
+    // 2312S航模电机
+    if (!true)
+    {
+        motor->encoderDir = -1;
+        motor->angleRadOffset = 2.297776f;
+        motor->polePairs = 7;
+        motor->Rs = 0.11247408f;
+        motor->Ld = 0.00002235f;
+        motor->Lq = 0.00002567f;
+    }
 
     // 2804云台电机
     if (!true)
@@ -59,13 +85,23 @@ int motor_create(motor_t *motor)
     }
 
     // 3510云台电机
-    if (true)
+    if (!true)
     {
         motor->encoderDir = 1;
         motor->angleRadOffset = 1.613109f;
         motor->polePairs = 11;
         motor->Rs = 7.8f;
         motor->Ld = 3.95f / 1000.0f;
+    }
+
+    // 6824云台电机
+    if (!true)
+    {
+        motor->encoderDir = -1;
+        motor->angleRadOffset = 2.297776f;
+        motor->polePairs = 11;
+        motor->Rs = 2.3613f;
+        motor->Ld = 210.0f / 1e6f;
     }
 
     // 5010电机
@@ -92,8 +128,9 @@ int motor_create(motor_t *motor)
     pid_ctrl_init(&motor->iqPid, kp, ki, 0, ki / kp, -upLimit, upLimit);
 
     /* 电机转速PI控制器初始化 */
-    upLimit = 4.0f; // iq
-    kp = 0.003f;
+    upLimit = 6.0f; // iq
+    upLimit = 10.0f; // iq
+    kp = 0.004f;
     ki = 0.001f;
     pid_ctrl_init(&motor->speedPid, kp, ki, 0, ki / kp, -upLimit, upLimit);
     motor->speedAcc = 0.1f;
@@ -283,26 +320,52 @@ float motor_get_speed_rpm(motor_t *motor)
 /**
  *
  * @param motor
- * @param idSet
+ * @param idRef
  */
-void motor_set_id_set(motor_t *motor, float idSet)
+void motor_set_id_ref(motor_t *motor, float idRef)
 {
     if (motor)
     {
-        motor->idSet = idSet;
+        motor->idRef = idRef;
     }
 }
 
 /**
  *
  * @param motor
- * @param iqSet
+ * @param iqRef
  */
-void motor_set_iq_set(motor_t *motor, float iqSet)
+void motor_set_iq_ref(motor_t *motor, float iqRef)
 {
     if (motor)
     {
-        motor->iqSet = iqSet;
+        motor->iqRef = iqRef;
+    }
+}
+
+/**
+ *
+ * @param motor
+ * @param id
+ */
+void motor_set_id(motor_t *motor, float id)
+{
+    if (motor)
+    {
+        motor->id = id;
+    }
+}
+
+/**
+ *
+ * @param motor
+ * @param iq
+ */
+void motor_set_iq(motor_t *motor, float iq)
+{
+    if (motor)
+    {
+        motor->iq = iq;
     }
 }
 
@@ -347,7 +410,7 @@ float motor_get_elec_angle(motor_t *motor)
     if (motor->encoderDir == -1)
     {
         motor->angleRad = (float) M_TWOPI - motor->angleRad;
-        motor->encoderRawData = motor->encoderCpr - motor->encoderRawData;
+//        motor->encoderRawData = motor->encoderCpr - motor->encoderRawData;
         motor->angle = 360.0f - motor->angle;
     }
 
@@ -361,9 +424,6 @@ float motor_get_elec_angle(motor_t *motor)
         val = (float) M_TWOPI - motor->angleRadOffset + motor->angleRad;
     }
     motor->theta = fmodf(val * (float) motor->polePairs, (float) M_TWOPI);
-
-    motor->sinTheta = arm_sin_f32(motor->theta);
-    motor->cosTheta = arm_cos_f32(motor->theta);
 
     return motor->theta;
 }
@@ -546,7 +606,7 @@ void motor_open_loop_test(motor_t *motor, float ud, float uq)
     /* 5. svpwm */
     int valid = 0;
     valid = foc_mid_point_svm(motor->ualpha, motor->ubeta, motor->VBus, &motor->ta, &motor->tb, &motor->tc);
-//    valid = odriver_svm(motor->ualpha, motor->ubeta, motor->VBus, &motor->ta, &motor->tb, &motor->tc);
+//    valid = odriver_svm(motor->ualpha, motor->ubeta, &motor->ta, &motor->tb, &motor->tc, &motor->sector);
     if (valid)
     {
         motor_set_and_apply_pwm_duty(motor, motor->ta, motor->tb, motor->tc);
@@ -566,13 +626,13 @@ int odriver_current_pi_ctrl(motor_t *motor)
     float mod_to_V = (2.0f / 3.0f) * motor->VBus;
     float V_to_mod = 1.0f / mod_to_V;
 
-    float idErr = motor->idSet - motor->id;
-    float iqErr = motor->iqSet - motor->iq;
+    float idErr = motor->idRef - motor->id;
+    float iqErr = motor->iqRef - motor->iq;
 
     float ud = V_to_mod * (motor->idPid.integral + idErr * motor->idPid.kp);
     float uq = V_to_mod * (motor->iqPid.integral + iqErr * motor->iqPid.kp);
 
-    float modScalefactor = 0.80f * SQRT3_DIV_2 / sqrtf(ud * ud + uq * uq);
+    float modScalefactor = 0.8f * SQRT3_DIV_2 / sqrtf(ud * ud + uq * uq);
     if (modScalefactor < 1.0f)
     {
         ud *= modScalefactor;
@@ -585,9 +645,6 @@ int odriver_current_pi_ctrl(motor_t *motor)
         motor->idPid.integral += idErr * (motor->idPid.ki / 20e3f);
         motor->iqPid.integral += iqErr * (motor->iqPid.ki / 20e3f);
     }
-
-//    FOC_CLAMP(ud, motor->idPid.outLowLimit, motor->idPid.outUpLimit);
-//    FOC_CLAMP(uq, motor->iqPid.outLowLimit, motor->iqPid.outUpLimit);
 
     motor->ud = ud;
     motor->uq = uq;
@@ -613,12 +670,12 @@ int motor_current_closed_loop(motor_t *motor)
 
     /* 3. id, iq pid ctrl */
     const float voltage_normalize = 1.5f / motor->VBus;
-    motor->ud *= voltage_normalize;
-    motor->uq *= voltage_normalize;
-    odriver_current_pi_ctrl(motor);
+//    motor->ud *= voltage_normalize;
+//    motor->uq *= voltage_normalize;
+//    odriver_current_pi_ctrl(motor);
 
-//    anti_windup_pi_ctrl(&motor->idPid, idSet, motor->id, &motor->ud);
-//    anti_windup_pi_ctrl(&motor->iqPid, iqSet, motor->iq, &motor->uq);
+    anti_windup_pi_ctrl(&motor->idPid, motor->idRef, motor->id, &motor->ud);
+    anti_windup_pi_ctrl(&motor->iqPid, motor->iqRef, motor->iq, &motor->uq);
 
     /* 4. inv park */
     foc_inv_park(motor->ud, motor->uq, motor->sinTheta, motor->cosTheta, &motor->ualpha, &motor->ubeta);
@@ -643,33 +700,33 @@ int motor_current_closed_loop(motor_t *motor)
 /**
  *
  * @param motor
- * @param speedSet
+ * @param speedRef
  */
-void motor_set_speed(motor_t *motor, float speedSet)
+void motor_set_speed(motor_t *motor, float speedRef)
 {
     if (motor)
     {
-        motor->speedSet = speedSet;
+        motor->speedRef = speedRef;
     }
 }
 
 /**
  * @brief Speed closed loop.
  * @param motor
- * @param speedSet
- * @param iqSet
+ * @param speedRef
+ * @param iqRef
  * @return
  */
-int motor_speed_closed_loop(motor_t *motor, float speedSet, float *iqSet)
+int motor_speed_closed_loop(motor_t *motor, float speedRef, float *iqRef)
 {
     if (motor == NULL)
         return -1;
 
 //    pid_ctrl_speed_calc(&motor->speedPid, speedRef, motor->speedRpm, &motor->speedPid.output);
-    int ret = anti_windup_pi_ctrl(&motor->speedPid, speedSet, motor->speedRpm, &motor->speedPid.output);
+    int ret = anti_windup_pi_ctrl(&motor->speedPid, speedRef, motor->speedRpm, &motor->speedPid.output);
 
-    if (iqSet)
-        *iqSet = motor->speedPid.output;
+    if (iqRef)
+        *iqRef = motor->speedPid.output;
 
     return ret;
 }
@@ -704,11 +761,11 @@ void motor_set_speed_acc(motor_t *motor, float speedAcc)
 /**
  * @brief Speed closed loop.
  * @param motor
- * @param posSet
- * @param speedSet
+ * @param posRef
+ * @param speedRef
  * @return
  */
-int motor_position_closed_loop(motor_t *motor, float posSet, float *speedSet)
+int motor_position_closed_loop(motor_t *motor, float posRef, float *speedRef)
 {
     if (motor == NULL)
         return -1;
@@ -716,7 +773,7 @@ int motor_position_closed_loop(motor_t *motor, float posSet, float *speedSet)
     int ret = 0;
     pid_ctrl_t *pid = &motor->speedPid;
 
-    float err = posSet - motor->angle;
+    float err = posRef - motor->angle;
     if (err > 180.0f)
         err -= 360.0f;
     else if (err < -180.0f)
@@ -732,8 +789,8 @@ int motor_position_closed_loop(motor_t *motor, float posSet, float *speedSet)
 
     /* Output */
     pid->output = clampOut;
-    if (speedSet)
-        *speedSet = pid->output;
+    if (speedRef)
+        *speedRef = pid->output;
 
     return ret;
 }
@@ -829,6 +886,44 @@ int motor_meas_phase_resistance2(motor_t *motor)
 
 
 /**
+ *
+ * @param motor
+ * @param thetaErr
+ * @return
+ */
+int motor_hfi_pll_calc(motor_t *motor, float thetaErr)
+{
+    int ret = 0;
+
+    if (motor == NULL)
+        return -1;
+
+    pid_ctrl_t *pid = &motor->hfiPll.pid;
+
+    float we = pid->kp * thetaErr + pid->integral;
+
+    motor->hfiThetaEst = motor->hfiPll.integral;
+    motor->hfiSpeedEst = we;
+
+    if (motor->hfiPll.integral >= M_TWOPI)
+    {
+        motor->hfiPll.integral -= M_TWOPI;
+    }
+    else if (motor->hfiPll.integral < 0)
+    {
+        motor->hfiPll.integral += M_TWOPI;
+    }
+    else
+    {}
+
+    pid->integral += pid->ki * thetaErr * pid->ts;
+    motor->hfiPll.integral += we * pid->ts;
+
+    return ret;
+}
+
+
+/**
  * @brief
  * @param motor
  * @return
@@ -859,74 +954,22 @@ int motor_ctrl_mode_loop(motor_t *motor)
 
         case MOTOR_CTRL_MODE_VOLT_ENCODER:
         {
-            motor_get_elec_angle(motor);
-
+            motor->sinTheta = arm_sin_f32(motor->theta);
+            motor->cosTheta = arm_cos_f32(motor->theta);
             motor_open_loop_test(motor, motor->ud, motor->uq);
             break;
         }
 
         case MOTOR_CTRL_MODE_CURRENT_SPEED_POSITION:
-        case MOTOR_CTRL_MODE_CURRENT_SPEED:
-        case MOTOR_CTRL_MODE_CURRENT:
-        default:
         {
-            /* 1. Clark */
-            foc_clark(motor->ia, motor->ib, &motor->ialpha, &motor->ibeta);
-            /* 2. Park */
-            foc_park(motor->ialpha, motor->ibeta, motor->sinTheta, motor->cosTheta, &motor->id, &motor->iq);
-
-            /* 3. id, iq pid ctrl */
-            const float voltage_normalize = 1.5f / motor->VBus;
-//                motor1.ud *= voltage_normalize;
-//                motor1.uq *= voltage_normalize;
-
-            if (motor->sensorless)
+            if (++motor->positionLoopCnt >= motor->currentLoopFreq / motor->positionLoopFreq)
             {
-                motor_set_id_set(motor, motor->hfiId);
-                motor_set_iq_set(motor, motor->hfiIq);
+                motor->positionLoopCnt = 0; // reset counter
+
+                motor_position_closed_loop(motor, motor->positionRef, &motor->speedRef);
             }
-            odriver_current_pi_ctrl(motor); // Get ud uq
-
-            /* 无传感器模式，使用高频方波注入提取初始转自位置 */
-            static bool isDirChanged = true;
-            if (motor->sensorless)
-            {
-                if (isDirChanged)
-                {
-                    motor->ud += motor->hfiVoltAmpl * voltage_normalize;
-                }
-                else
-                {
-                    motor->ud -= motor->hfiVoltAmpl * voltage_normalize;
-                }
-                isDirChanged = !isDirChanged;
-            }
-
-            /* 4. Inv park */
-            foc_inv_park(motor->ud, motor->uq, motor->sinTheta, motor->cosTheta, &motor->ualpha, &motor->ubeta);
-
-            /* 高频信号分离 */
-            motor->hfiId = 0.5f * (motor->id + motor->idLast);
-            motor->hfiIq = 0.5f * (motor->iq + motor->iqLast);
-            motor->idLast = motor->id;
-            motor->iqLast = motor->iq;
-
-            /* 5. SVM */
-            ret = odriver_svm(motor->ualpha, motor->ubeta, &motor->ta, &motor->tb, &motor->tc, &motor->sector);
-            if (ret)
-            {
-                motor_set_and_apply_pwm_duty(motor, motor->ta, motor->tb, motor->tc);
-
-                /* 6. Recover ud uq */
-                motor->ud /= voltage_normalize;
-                motor->uq /= voltage_normalize;
-            }
-            break;
         }
-    }
 
-    switch (motor->ctrlMode)
-    {
         case MOTOR_CTRL_MODE_CURRENT_SPEED:
         {
             if (++motor->speedLoopCnt >= motor->currentLoopFreq / motor->speedLoopFreq)
@@ -936,36 +979,121 @@ int motor_ctrl_mode_loop(motor_t *motor)
                 /* Speed ramp */
                 if (motor->isUseSpeedRamp)
                 {
-                    if (motor->speedSet > motor->speedShadow)
+                    if (motor->speedRef > motor->speedShadow)
                     {
                         motor->speedShadow += motor->speedAcc;
-                        if (motor->speedShadow > motor->speedSet)
-                            motor->speedShadow = motor->speedSet;
+                        if (motor->speedShadow > motor->speedRef)
+                            motor->speedShadow = motor->speedRef;
                     }
-                    else if (motor->speedSet < motor->speedShadow)
+                    else if (motor->speedRef < motor->speedShadow)
                     {
                         motor->speedShadow -= motor->speedAcc;
-                        if (motor->speedShadow < motor->speedSet)
-                            motor->speedShadow = motor->speedSet;
+                        if (motor->speedShadow < motor->speedRef)
+                            motor->speedShadow = motor->speedRef;
                     }
                     else
                     {
                     }
                 }
 
-                motor_speed_closed_loop(motor, motor->speedShadow, &motor->iqSet);
+                motor_speed_closed_loop(motor, motor->speedShadow, &motor->iqRef);
             }
-            break;
         }
 
-        case MOTOR_CTRL_MODE_CURRENT_SPEED_POSITION:
+        case MOTOR_CTRL_MODE_CURRENT:
         default:
         {
-            if (++motor->positionLoopCnt >= motor->currentLoopFreq / motor->positionLoopFreq)
-            {
-                motor->positionLoopCnt = 0; // reset counter
+            /* 1. Clark */
+            foc_clark(motor->ia, motor->ib, &motor->ialpha, &motor->ibeta);
 
-                motor_position_closed_loop(motor, motor->positionSet, &motor->speedSet);
+            /* HFI 位置、转速观测器 */
+            if (motor->sensorless)
+            {
+                /* 提取高频信号 */
+                motor->hfiIalpha = 0.5f * (motor->ialpha - motor->ialphaLast);
+                motor->hfiIbeta = 0.5f * (motor->ibeta - motor->ibetaLast);
+                motor->ialphaLast = motor->ialpha;
+                motor->ibetaLast = motor->ibeta;
+
+                /* 高频电流差值 */
+                motor->hfiIalphaDiff = motor->hfiIalpha - motor->hfiIalphaLast;
+                motor->hfiIbetaDiff = motor->hfiIbeta - motor->hfiIbetaLast;
+                motor->hfiIalphaLast = motor->hfiIalpha;
+                motor->hfiIbetaLast = motor->hfiIbeta;
+
+                /* 包络线 */
+                int udhSign = sign(motor->hfiUd);
+                motor->hfiIalphaEnvelope = motor->hfiIalphaDiff * (float) udhSign;
+                motor->hfiIbetaEnvelope = motor->hfiIbetaDiff * (float) udhSign;
+
+                /* 矢量叉乘 */
+                motor->hfiThetaDiff = motor->hfiIbetaEnvelope * arm_cos_f32(motor->hfiThetaEst) -
+                                      motor->hfiIalphaEnvelope * arm_sin_f32(motor->hfiThetaEst);
+
+                /* 位置误差跟踪 */
+                motor_hfi_pll_calc(motor, motor->hfiThetaDiff);
+                motor->hfiSpeedEst = lpf_work(&motor->hfiSpeedEstLpf, motor->hfiSpeedEst);
+                motor->hfiTheta = motor->hfiThetaEst;
+            }
+
+            /* 使用编码器角度还是无感观测出的角度 */
+            if (motor->sensorless)
+            {
+                motor->sinTheta = arm_sin_f32(motor->hfiTheta);
+                motor->cosTheta = arm_cos_f32(motor->hfiTheta);
+            }
+            else
+            {
+                motor->sinTheta = arm_sin_f32(motor->theta);
+                motor->cosTheta = arm_cos_f32(motor->theta);
+            }
+
+            /* 2. Park */
+            foc_park(motor->ialpha, motor->ibeta, motor->sinTheta, motor->cosTheta, &motor->id, &motor->iq);
+
+            /* 3. id, iq pid ctrl */
+            const float voltage_normalize = 1.5f / motor->VBus;
+
+            /* HFI 提取基频信号 */
+            if (motor->sensorless)
+            {
+                motor->hfiId = 0.5f * (motor->id + motor->idLast);
+                motor->hfiIq = 0.5f * (motor->iq + motor->iqLast);
+                motor->idLast = motor->id;
+                motor->iqLast = motor->iq;
+
+                motor_set_id(motor, motor->hfiId);
+                motor_set_iq(motor, motor->hfiIq);
+            }
+            odriver_current_pi_ctrl(motor); // Get ud uq
+
+            /* HFI 无传感器模式，注入高频方波信号 */
+            static bool isDirChanged = true;
+            if (motor->sensorless)
+            {
+                if (isDirChanged)
+                {
+                    motor->hfiUd = motor->hfiVoltAmpl * voltage_normalize;
+                }
+                else
+                {
+                    motor->hfiUd = motor->hfiVoltAmpl * voltage_normalize * -1;
+                }
+                motor->ud += motor->hfiUd;
+                isDirChanged = !isDirChanged;
+            }
+
+            /* 4. Inv park */
+            foc_inv_park(motor->ud, motor->uq, motor->sinTheta, motor->cosTheta, &motor->ualpha, &motor->ubeta);
+            /* 5. SVM */
+            ret = odriver_svm(motor->ualpha, motor->ubeta, &motor->ta, &motor->tb, &motor->tc, &motor->sector);
+            if (ret)
+            {
+                motor_set_and_apply_pwm_duty(motor, motor->ta, motor->tb, motor->tc);
+
+                /* 6. Recover ud uq */
+                motor->ud /= voltage_normalize;
+                motor->uq /= voltage_normalize;
             }
             break;
         }
@@ -986,6 +1114,19 @@ int motor_status_loop(motor_t *motor)
 
     if (motor == NULL)
         return -1;
+
+    /* Get phase current. */
+    motor->get_phase_current(motor);
+
+    /* 电机处于 编码器校准模式 */
+    if (motor->status == MOTOR_STATUS_CALIB_ENCODER)
+        return MOTOR_STATUS_CALIB_ENCODER;
+
+    /* Get position. */
+    motor_get_elec_angle(motor);
+
+    foc_pll_calc(&motor->speedPll, motor->encoderRawData);
+    motor->speedRpm = motor->speedPll.speed * motor->currentLoopFreq * 60.0f;
 
     switch (motor->status)
     {

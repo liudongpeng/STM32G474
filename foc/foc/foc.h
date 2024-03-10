@@ -21,6 +21,18 @@ typedef struct foc_pll
 
 
 
+
+typedef struct hfi_pll
+{
+    pid_ctrl_t pid;
+
+    float integral;
+
+} hfi_pll_t;
+
+
+
+
 static inline int foc_pid_diff(int a, int b, int rand)
 {
     int diff = a - b;
@@ -57,6 +69,9 @@ int odriver_svm(float ualpha, float ubeta, float* ta, float* tb, float* tc, int*
 
 int foc_pll_init(foc_pll_t* pll, float p, float i, float d, float ka, float lowLimit, float upLimit);
 int foc_pll_calc(foc_pll_t* pll, int rawAngle);
+
+
+int hfi_pll_calc(hfi_pll_t* pll, float alpha, float beta, float thetaErr, float* weEst, float* thetaEst);
 
 
 

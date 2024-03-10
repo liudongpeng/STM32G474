@@ -5,10 +5,10 @@
 1	247	7305404419556961	CMakeFiles/foc.elf.dir/Core/Src/dma.c.obj	ff01e6e15d840768
 49	307	7305404420017430	CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj	d4a2dda4f50a9f54
 30	260	7305404419566760	CMakeFiles/foc.elf.dir/Core/Src/tim.c.obj	72b17b8a37ae2501
-27	237	7305404419410006	CMakeFiles/foc.elf.dir/Core/Src/sysmem.c.obj	8629123f4faec6e2
 278	472	7305404421859300	CMakeFiles/foc.elf.dir/Core/Src/adc.c.obj	6201ee67855d77ba
-270	476	7305404421986664	CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj	f05a8f36bb1faf9
+27	237	7305404419410006	CMakeFiles/foc.elf.dir/Core/Src/sysmem.c.obj	8629123f4faec6e2
 16	241	7305404419449193	CMakeFiles/foc.elf.dir/Core/Src/stm32g4xx_it.c.obj	b5a20489b62394f3
+270	476	7305404421986664	CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj	f05a8f36bb1faf9
 6	254	7305404419537374	CMakeFiles/foc.elf.dir/Core/Src/gpio.c.obj	a33b3427a3b799e3
 427	794	7305404425386280	CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj	9c13a5bb13306b6c
 70	250	7305404419743115	CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c.obj	c4fcef0611c748b9
