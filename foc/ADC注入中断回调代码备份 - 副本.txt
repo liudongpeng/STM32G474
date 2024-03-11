@@ -1,0 +1,240 @@
+/**
+  * @brief  Injected conversion complete callback in non-blocking mode.
+  * @param hadc ADC handle
+  * @retval None
+  */
+void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
+{
+    /* Calc ADC offset */
+    static bool isCalcAdcOffsetOvered = false;
+    const int measCnt = 20;
+    static int measCntCopy = measCnt;
+    if (hadc->Instance == ADC1 && !isCalcAdcOffsetOvered)
+    {
+        foc_board.iaOffset += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
+        foc_board.ibOffset += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_1);
+
+        if (--measCntCopy <= 0)
+        {
+            foc_board.iaOffset /= measCnt;
+            foc_board.ibOffset /= measCnt;
+
+            isCalcAdcOffsetOvered = true;
+            foc_board.isAdcCalibOvered = true;
+        }
+    }
+
+    /* Current closed loop */
+    if (hadc->Instance == ADC1 && isCalcAdcOffsetOvered)
+    {
+        HAL_GPIO_WritePin(UserTest_GPIO_Port, UserTest_Pin, GPIO_PIN_SET);
+
+        /* Get phase current. */
+        motor1.get_phase_current(&motor1);
+//        motor1.ia = lpf_work(&motor1.iaLpFilter, motor1.ia);
+//        motor1.ib = lpf_work(&motor1.ibLpFilter, motor1.ib);
+
+        /* Get motor electricity angle. */
+        static bool isReadEncoder = true;
+        if (isReadEncoder)
+        {
+            //motor_get_elec_angle(&motor1);
+        }
+        else
+        {
+            motor_get_angle_rad(&motor1);
+
+            static bool isAngleInc = true;
+            if (isAngleInc)
+            {
+                motor1.theta += 0.01f;
+                if (motor1.theta > M_TWOPI)
+                    motor1.theta -= M_TWOPI;
+            }
+            motor1.sinTheta = arm_sin_f32(motor1.theta);
+            motor1.cosTheta = arm_cos_f32(motor1.theta);
+
+            /* 1. clark */
+            foc_clark(motor1.ia, motor1.ib, &motor1.ialpha, &motor1.ibeta);
+            /* 2. park */
+            foc_park(motor1.ialpha, motor1.ibeta, motor1.sinTheta, motor1.cosTheta, &motor1.id, &motor1.iq);
+        }
+
+        /* Calc speed. */
+        static bool isPllCalcSpeed = true;
+        if (isPllCalcSpeed)
+        {
+            foc_pll_calc(&motor1.speedPll, motor1.encoderRawData);
+            motor1.speedRpm = motor1.speedPll.speed * 20000 * 60;
+        }
+        else
+        {
+            static int sLastEncoderRaw = 0;
+
+//            motor1.encoderRawData = 16384 - motor1.encoderRawData;
+//            int encoderRaw = GetCurrentAbsTotalValue(ENCODER_CPR - motor1.encoderRawData);
+
+            int encoderRaw = GetCurrentAbsTotalValue(motor1.encoderRawData);
+            float detRad = (float) (encoderRaw - sLastEncoderRaw) * 20000 * 60.0f / 16384;
+            motor1.speedRpm = window_filter(detRad, windowFilterBuf, WIN_BUF_SIZE);
+//            motor1.speedRpm = low_pass_filter_work(&motor1.speedLdFilter, detRad);
+
+            sLastEncoderRaw = encoderRaw;
+        }
+
+        /* Motor run. */
+        if (motor1.status == MOTOR_STATUS_RUN)
+        {
+            /* Current closed loop. */
+            static bool isCurrentLoop = true;
+            if (isCurrentLoop)
+            {
+                motor1.theta = 0;
+                motor1.sinTheta = arm_sin_f32(motor1.theta);
+                motor1.cosTheta = arm_cos_f32(motor1.theta);
+
+                /* 1. Clark */
+                foc_clark(motor1.ia, motor1.ib, &motor1.ialpha, &motor1.ibeta);
+                /* 2. Park */
+                foc_park(motor1.ialpha, motor1.ibeta, motor1.sinTheta, motor1.cosTheta, &motor1.id, &motor1.iq);
+
+                /* 3. id, iq pid ctrl */
+                const float voltage_normalize = 1.5f / motor1.VBus;
+//                motor1.ud *= voltage_normalize;
+//                motor1.uq *= voltage_normalize;
+
+                motor_set_id_set(&motor1, motor1.hfiId);
+                motor_set_iq_set(&motor1, motor1.hfiIq);
+                odriver_current_pi_ctrl(&motor1);
+
+                /* HFI inj */
+                static bool isUseHFI = true;
+                static bool isDirChanged = true;
+                if (isUseHFI)
+                {
+                    if (isDirChanged)
+                    {
+                        motor1.ud += motor1.hfiVoltAmpl * voltage_normalize;
+                    }
+                    else
+                    {
+                        motor1.ud -= motor1.hfiVoltAmpl * voltage_normalize;
+                    }
+                    isDirChanged = !isDirChanged;
+                }
+
+                /* 4. Inv park */
+                foc_inv_park(motor1.ud, motor1.uq, motor1.sinTheta, motor1.cosTheta, &motor1.ualpha, &motor1.ubeta);
+
+                /* HFI detach */
+                motor1.hfiId = 0.5f * (motor1.id + motor1.idLast);
+                motor1.hfiIq = 0.5f * (motor1.iq + motor1.iqLast);
+                motor1.idLast = motor1.id;
+                motor1.iqLast = motor1.iq;
+
+                /* 5. SVM */
+                int valid = odriver_svm(motor1.ualpha, motor1.ubeta, &motor1.ta, &motor1.tb, &motor1.tc, &motor1.sector);
+                if (valid)
+                {
+                    motor_set_and_apply_pwm_duty(&motor1, motor1.ta, motor1.tb, motor1.tc);
+
+                    /* 6. Recover ud uq */
+                    motor1.ud /= voltage_normalize;
+                    motor1.uq /= voltage_normalize;
+                }
+            }
+            else
+            {
+                motor_open_loop_test(&motor1, motor1.ud, motor1.uq);
+            }
+
+            /* Speed closed loop. */
+            static bool isSpeedLoop = !true;
+            static uint32_t speedFbkCnt = 0;
+            if (++speedFbkCnt >= 4 && isCurrentLoop && isSpeedLoop)
+            {
+                speedFbkCnt = 0; // reset counter
+
+                /* Speed ramp */
+                if (motor1.isUseSpeedRamp)
+                {
+                    if (motor1.speedSet > motor1.speedShadow)
+                    {
+                        motor1.speedShadow += motor1.speedAcc;
+                        if (motor1.speedShadow > motor1.speedSet)
+                            motor1.speedShadow = motor1.speedSet;
+                    }
+                    else if (motor1.speedSet < motor1.speedShadow)
+                    {
+                        motor1.speedShadow -= motor1.speedAcc;
+                        if (motor1.speedShadow < motor1.speedSet)
+                            motor1.speedShadow = motor1.speedSet;
+                    }
+                    else
+                    {
+                    }
+                }
+
+                motor_speed_closed_loop(&motor1, motor1.speedShadow, &motor1.iqSet);
+            }
+
+            /* Position closed loop. */
+            static bool isPositionLoop = !true;
+            static uint32_t posFbkCnt = 0;
+            if (++posFbkCnt >= 20 && isCurrentLoop && isSpeedLoop && isPositionLoop)
+            {
+                posFbkCnt = 0; // reset counter
+
+                motor_position_closed_loop(&motor1, motor1.positionSet, &motor1.speedSet);
+            }
+        }
+
+        /* Vofa debug. */
+        int dataIndex = 0;
+        vfoaFrame.fdata[dataIndex++] = motor1.ia;
+        vfoaFrame.fdata[dataIndex++] = motor1.ib;
+        vfoaFrame.fdata[dataIndex++] = motor1.ialpha;
+        vfoaFrame.fdata[dataIndex++] = motor1.ibeta;
+        vfoaFrame.fdata[dataIndex++] = motor1.VBus;
+        vfoaFrame.fdata[dataIndex++] = (float) motor1.angleRadOffset;
+        vfoaFrame.fdata[dataIndex++] = motor1.theta;
+
+        vfoaFrame.fdata[dataIndex++] = (float) motor1.ta;
+        vfoaFrame.fdata[dataIndex++] = (float) motor1.tb;
+        vfoaFrame.fdata[dataIndex++] = (float) motor1.tc;
+
+        vfoaFrame.fdata[dataIndex++] = motor1.iqPid.kp;
+        vfoaFrame.fdata[dataIndex++] = motor1.iqPid.ki;
+        vfoaFrame.fdata[dataIndex++] = motor1.iqSet;
+        vfoaFrame.fdata[dataIndex++] = motor1.iq;
+
+        vfoaFrame.fdata[dataIndex++] = motor1.idPid.kp;
+        vfoaFrame.fdata[dataIndex++] = motor1.idPid.ki;
+        vfoaFrame.fdata[dataIndex++] = motor1.idSet;
+        vfoaFrame.fdata[dataIndex++] = motor1.id;
+
+        vfoaFrame.fdata[dataIndex++] = motor1.speedPid.kp;
+        vfoaFrame.fdata[dataIndex++] = motor1.speedPid.ki;
+        vfoaFrame.fdata[dataIndex++] = motor1.speedSet;
+        vfoaFrame.fdata[dataIndex++] = motor1.speedRpm;
+
+        vfoaFrame.fdata[dataIndex++] = motor1.positionPid.kp;
+        vfoaFrame.fdata[dataIndex++] = motor1.positionPid.ki;
+        vfoaFrame.fdata[dataIndex++] = motor1.positionSet;
+        vfoaFrame.fdata[dataIndex++] = motor1.angle;
+
+        vfoaFrame.fdata[dataIndex++] = motor1.uq;
+        vfoaFrame.fdata[dataIndex++] = motor1.ud;
+        vfoaFrame.fdata[dataIndex++] = (float) motor1.sector;
+        vfoaFrame.fdata[dataIndex++] = motor1.hfiVoltAmpl;
+
+        /* HFI */
+        vfoaFrame.fdata[dataIndex++] = motor1.hfiIq;
+        vfoaFrame.fdata[dataIndex++] = motor1.hfiId;
+
+        HAL_UART_Transmit_DMA(&huart3, (uint8_t *) (&vfoaFrame), sizeof(vfoaFrame));
+//        CDC_Transmit_FS((uint8_t *) (&vfoaFrame), sizeof(vfoaFrame));
+
+        HAL_GPIO_WritePin(UserTest_GPIO_Port, UserTest_Pin, GPIO_PIN_RESET);
+    }
+}
