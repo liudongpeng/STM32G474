@@ -24,19 +24,20 @@ int motor_create(motor_t *motor)
     motor->positionLoopFreq = 1000;
 
     /* HFI 参数 */
-    motor->hfiVoltAmpl = 0.5f;
+    motor->hfiVoltAmpl = 12.0f * 0.1f;
     motor->sensorless = true;
-    pid_ctrl_init(&motor->hfiPll.pid, 3000.0f, 30000.0f, 0, 0, -2000.0f, 2000.0f);
+    pid_ctrl_init(&motor->hfiPll.pid, 3000.0f, 47000.0f, 0, 0, -2000.0f, 2000.0f);
     lpf_init(&motor->hfiSpeedEstLpf, 100.0f, 1.0f / 20000.0f);
 
     /* 电机控制模式 */
-    motor_set_ctrl_mode(motor, MOTOR_CTRL_MODE_CURRENT);
-//    motor_set_ctrl_mode(motor, MOTOR_CTRL_MODE_CURRENT_SPEED);
+//    motor_set_ctrl_mode(motor, MOTOR_CTRL_MODE_CURRENT);
+    motor_set_ctrl_mode(motor, MOTOR_CTRL_MODE_CURRENT_SPEED);
 //    motor_set_ctrl_mode(motor, MOTOR_CTRL_MODE_VOLT_ENCODER);
 //    motor_set_ctrl_mode(motor, MOTOR_CTRL_MODE_VOLT_ANGLE_INC);
     motor_set_status(motor, MOTOR_STATUS_STOP);
 
-    motor_set_speed(motor, 60.0f);
+    motor_set_id_ref(motor, 0.3f);
+    motor_set_speed(motor, 100.0f);
 
 
     motor->VBus = 12.0f;
@@ -120,8 +121,8 @@ int motor_create(motor_t *motor)
     lpf_init(&motor->icLpFilter, 1000.0f, 1.0f / 20e3f);
 
     /* 电流环PI参数 */
-    float kp = motor->Ld * 500;
-    float ki = motor->Rs * 500;
+    float kp = motor->Ld * 400;
+    float ki = motor->Rs * 400;
     float kd = 0;
     float upLimit = motor->VBus / SQRT3 * 0.9f; // uq
     pid_ctrl_init(&motor->idPid, kp, ki, 0, ki / kp, -upLimit, upLimit);
@@ -717,13 +718,13 @@ void motor_set_speed(motor_t *motor, float speedRef)
  * @param iqRef
  * @return
  */
-int motor_speed_closed_loop(motor_t *motor, float speedRef, float *iqRef)
+int motor_speed_closed_loop(motor_t *motor, float speedRpmRef, float speedRpmFbk, float *iqRef)
 {
     if (motor == NULL)
         return -1;
 
 //    pid_ctrl_speed_calc(&motor->speedPid, speedRef, motor->speedRpm, &motor->speedPid.output);
-    int ret = anti_windup_pi_ctrl(&motor->speedPid, speedRef, motor->speedRpm, &motor->speedPid.output);
+    int ret = anti_windup_pi_ctrl(&motor->speedPid, speedRpmRef, speedRpmFbk, &motor->speedPid.output);
 
     if (iqRef)
         *iqRef = motor->speedPid.output;
@@ -891,7 +892,7 @@ int motor_meas_phase_resistance2(motor_t *motor)
  * @param thetaErr
  * @return
  */
-int motor_hfi_pll_calc(motor_t *motor, float thetaErr)
+int motor_hfi_pi_calc(motor_t *motor, float thetaErr)
 {
     int ret = 0;
 
@@ -996,7 +997,7 @@ int motor_ctrl_mode_loop(motor_t *motor)
                     }
                 }
 
-                motor_speed_closed_loop(motor, motor->speedShadow, &motor->iqRef);
+                motor_speed_closed_loop(motor, motor->speedShadow, motor->hfiSpeedRpm, &motor->iqRef);
             }
         }
 
@@ -1010,8 +1011,10 @@ int motor_ctrl_mode_loop(motor_t *motor)
             if (motor->sensorless)
             {
                 /* 提取高频信号 */
-                motor->hfiIalpha = 0.5f * (motor->ialpha - motor->ialphaLast);
-                motor->hfiIbeta = 0.5f * (motor->ibeta - motor->ibetaLast);
+//                motor->hfiIalpha = 0.5f * (motor->ialpha - motor->ialphaLast);
+//                motor->hfiIbeta = 0.5f * (motor->ibeta - motor->ibetaLast);
+                motor->hfiIalpha = 0.5f * (-motor->ialpha + motor->ialphaLast);
+                motor->hfiIbeta = 0.5f * (-motor->ibeta + motor->ibetaLast);
                 motor->ialphaLast = motor->ialpha;
                 motor->ibetaLast = motor->ibeta;
 
@@ -1031,8 +1034,9 @@ int motor_ctrl_mode_loop(motor_t *motor)
                                       motor->hfiIalphaEnvelope * arm_sin_f32(motor->hfiThetaEst);
 
                 /* 位置误差跟踪 */
-                motor_hfi_pll_calc(motor, motor->hfiThetaDiff);
+                motor_hfi_pi_calc(motor, motor->hfiThetaDiff);
                 motor->hfiSpeedEst = lpf_work(&motor->hfiSpeedEstLpf, motor->hfiSpeedEst);
+                motor->hfiSpeedRpm = motor->hfiSpeedEst * 9.55f / (float)motor->polePairs;
                 motor->hfiTheta = motor->hfiThetaEst;
             }
 
@@ -1065,7 +1069,7 @@ int motor_ctrl_mode_loop(motor_t *motor)
                 motor_set_id(motor, motor->hfiId);
                 motor_set_iq(motor, motor->hfiIq);
             }
-            odriver_current_pi_ctrl(motor); // Get ud uq
+            odriver_current_pi_ctrl(motor);
 
             /* HFI 无传感器模式，注入高频方波信号 */
             static bool isDirChanged = true;

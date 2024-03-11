@@ -167,7 +167,7 @@ int motor_current_closed_loop(motor_t *motor);
 
 
 void motor_set_speed(motor_t *motor, float speedRef);
-int motor_speed_closed_loop(motor_t *motor, float speedRef, float* iqRef);
+int motor_speed_closed_loop(motor_t *motor, float speedRef, float speedRpmFbk, float* iqRef);
 void motor_set_speed_ramp_time(motor_t *motor, float speedRampTime);
 void motor_set_speed_acc(motor_t *motor, float speedAcc);
 
@@ -178,7 +178,7 @@ int motor_meas_phase_resistance(motor_t *motor);
 int motor_meas_phase_resistance2(motor_t *motor);
 
 
-int motor_hfi_pll_calc(motor_t* motor, float thetaErr);
+int motor_hfi_pi_calc(motor_t* motor, float thetaErr);
 
 
 #endif //FOC_MOTOR_H
