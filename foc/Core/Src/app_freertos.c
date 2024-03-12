@@ -318,7 +318,7 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
     /* Calc ADC offset */
     static bool isCalcAdcOffsetOvered = false;
-    const int measCnt = 20;
+    static const int measCnt = 20;
     static int measCntCopy = measCnt;
     if (hadc->Instance == ADC1 && !isCalcAdcOffsetOvered)
     {
@@ -343,58 +343,61 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
         motor_status_loop(&motor1);
 
         /* Vofa debug. */
-        int dataIndex = 0;
-        vfoaFrame.fdata[dataIndex++] = motor1.ia;
-        vfoaFrame.fdata[dataIndex++] = motor1.ib;
-        vfoaFrame.fdata[dataIndex++] = (float) motor1.encoderRawData;
-        vfoaFrame.fdata[dataIndex++] = motor1.ibeta;
-        vfoaFrame.fdata[dataIndex++] = motor1.VBus;
-        vfoaFrame.fdata[dataIndex++] = (float) motor1.angleRadOffset;
-        vfoaFrame.fdata[dataIndex++] = motor1.theta;
+        if (!false)
+        {
+            int dataIndex = 0;
+            vfoaFrame.fdata[dataIndex++] = motor1.ia;
+            vfoaFrame.fdata[dataIndex++] = motor1.ib;
+            vfoaFrame.fdata[dataIndex++] = (float) motor1.encoderRawData;
+            vfoaFrame.fdata[dataIndex++] = motor1.ibeta;
+            vfoaFrame.fdata[dataIndex++] = motor1.VBus;
+            vfoaFrame.fdata[dataIndex++] = (float) motor1.angleRadOffset;
+            vfoaFrame.fdata[dataIndex++] = motor1.theta;
 
-        vfoaFrame.fdata[dataIndex++] = (float) motor1.ta;
-        vfoaFrame.fdata[dataIndex++] = (float) motor1.tb;
-        vfoaFrame.fdata[dataIndex++] = (float) motor1.tc;
+            vfoaFrame.fdata[dataIndex++] = (float) motor1.ta;
+            vfoaFrame.fdata[dataIndex++] = (float) motor1.tb;
+            vfoaFrame.fdata[dataIndex++] = (float) motor1.tc;
 
-        vfoaFrame.fdata[dataIndex++] = motor1.iqPid.kp;
-        vfoaFrame.fdata[dataIndex++] = motor1.iqPid.ki;
-        vfoaFrame.fdata[dataIndex++] = motor1.iqRef;
-        vfoaFrame.fdata[dataIndex++] = motor1.iq;
+            vfoaFrame.fdata[dataIndex++] = motor1.iqPid.kp;
+            vfoaFrame.fdata[dataIndex++] = motor1.iqPid.ki;
+            vfoaFrame.fdata[dataIndex++] = motor1.iqRef;
+            vfoaFrame.fdata[dataIndex++] = motor1.iq;
 
-        vfoaFrame.fdata[dataIndex++] = motor1.idPid.kp;
-        vfoaFrame.fdata[dataIndex++] = motor1.idPid.ki;
-        vfoaFrame.fdata[dataIndex++] = motor1.idRef;
-        vfoaFrame.fdata[dataIndex++] = motor1.id;
+            vfoaFrame.fdata[dataIndex++] = motor1.idPid.kp;
+            vfoaFrame.fdata[dataIndex++] = motor1.idPid.ki;
+            vfoaFrame.fdata[dataIndex++] = motor1.idRef;
+            vfoaFrame.fdata[dataIndex++] = motor1.id;
 
-        vfoaFrame.fdata[dataIndex++] = motor1.speedPid.kp;
-        vfoaFrame.fdata[dataIndex++] = motor1.speedPid.ki;
-        vfoaFrame.fdata[dataIndex++] = motor1.speedRef;
-        vfoaFrame.fdata[dataIndex++] = motor1.speedRpm;
+            vfoaFrame.fdata[dataIndex++] = motor1.speedPid.kp;
+            vfoaFrame.fdata[dataIndex++] = motor1.speedPid.ki;
+            vfoaFrame.fdata[dataIndex++] = motor1.speedRef;
+            vfoaFrame.fdata[dataIndex++] = motor1.speedRpm;
 
-        vfoaFrame.fdata[dataIndex++] = motor1.positionPid.kp;
-        vfoaFrame.fdata[dataIndex++] = motor1.positionPid.ki;
-        vfoaFrame.fdata[dataIndex++] = motor1.positionRef;
-        vfoaFrame.fdata[dataIndex++] = motor1.angle;
+            vfoaFrame.fdata[dataIndex++] = motor1.positionPid.kp;
+            vfoaFrame.fdata[dataIndex++] = motor1.positionPid.ki;
+            vfoaFrame.fdata[dataIndex++] = motor1.positionRef;
+            vfoaFrame.fdata[dataIndex++] = motor1.angle;
 
-        vfoaFrame.fdata[dataIndex++] = motor1.uq;
-        vfoaFrame.fdata[dataIndex++] = motor1.ud;
-        vfoaFrame.fdata[dataIndex++] = (float) motor1.sector;
-        vfoaFrame.fdata[dataIndex++] = motor1.hfiVoltAmpl;
+            vfoaFrame.fdata[dataIndex++] = motor1.uq;
+            vfoaFrame.fdata[dataIndex++] = motor1.ud;
+            vfoaFrame.fdata[dataIndex++] = (float) motor1.sector;
+            vfoaFrame.fdata[dataIndex++] = motor1.hfiVoltAmpl;
 
-        /* HFI */
-        vfoaFrame.fdata[dataIndex++] = motor1.ialpha;
-        vfoaFrame.fdata[dataIndex++] = motor1.ibeta;
-        vfoaFrame.fdata[dataIndex++] = motor1.hfiIalpha;
-        vfoaFrame.fdata[dataIndex++] = motor1.hfiIbeta;
-        vfoaFrame.fdata[dataIndex++] = motor1.theta;
-        vfoaFrame.fdata[dataIndex++] = motor1.hfiTheta;
-        vfoaFrame.fdata[dataIndex++] = motor1.hfiIalphaEnvelope;
-        vfoaFrame.fdata[dataIndex++] = motor1.hfiIbetaEnvelope;
-        vfoaFrame.fdata[dataIndex++] = motor1.speedRef;
-        vfoaFrame.fdata[dataIndex++] = motor1.hfiSpeedRpm;
+            /* HFI */
+            vfoaFrame.fdata[dataIndex++] = motor1.ialpha;
+            vfoaFrame.fdata[dataIndex++] = motor1.ibeta;
+            vfoaFrame.fdata[dataIndex++] = motor1.hfiIalpha;
+            vfoaFrame.fdata[dataIndex++] = motor1.hfiIbeta;
+            vfoaFrame.fdata[dataIndex++] = motor1.theta;
+            vfoaFrame.fdata[dataIndex++] = motor1.hfiTheta;
+            vfoaFrame.fdata[dataIndex++] = motor1.hfiIalphaEnvelope;
+            vfoaFrame.fdata[dataIndex++] = motor1.hfiIbetaEnvelope;
+            vfoaFrame.fdata[dataIndex++] = motor1.speedRef;
+            vfoaFrame.fdata[dataIndex++] = motor1.hfiSpeedRpm;
 
-        HAL_UART_Transmit_DMA(&huart3, (uint8_t *) (&vfoaFrame), sizeof(vfoaFrame));
+            HAL_UART_Transmit_DMA(&huart3, (uint8_t *) (&vfoaFrame), sizeof(vfoaFrame));
 //        CDC_Transmit_FS((uint8_t *) (&vfoaFrame), sizeof(vfoaFrame));
+        }
 
         HAL_GPIO_WritePin(UserTest_GPIO_Port, UserTest_Pin, GPIO_PIN_RESET);
     }
@@ -494,6 +497,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
         {
             float val = vofa_cmd_parse(vofaCmdBuf, "pos_ref=");
             motor1.positionRef = val;
+//            motor_set_round(&motor1, val, 1);
         }
         else if (strstr(vofaCmdBuf, "pos_kp="))
         {

@@ -82,7 +82,8 @@ typedef struct motor
 
     /* Position loop param. */
     pid_ctrl_t positionPid;
-    float positionRef;
+    int dir;
+    float positionRef, roundRef;
     int positionLoopFreq, positionLoopCnt;
 
     /* PWM */
@@ -172,7 +173,10 @@ void motor_set_speed_ramp_time(motor_t *motor, float speedRampTime);
 void motor_set_speed_acc(motor_t *motor, float speedAcc);
 
 
+void motor_set_position(motor_t *motor, float angle);
 int motor_position_closed_loop(motor_t *motor, float posRef, float* speedRef);
+int motor_round_to_angle(motor_t *motor, float n, int dir, float* targetAngle);
+void motor_set_round(motor_t *motor, float n, int dir);
 
 int motor_meas_phase_resistance(motor_t *motor);
 int motor_meas_phase_resistance2(motor_t *motor);
