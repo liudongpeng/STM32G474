@@ -18,16 +18,23 @@ int motor_create(motor_t *motor)
 
     memset(motor, 0, sizeof(motor_t));
 
+    motor->VBus = 12.0f;
+    motor->timArr = FOC_TIM1_ARR;
+    motor->encoderCpr = 16384;
+
+
     /* 三环控制频率 */
     motor->currentLoopFreq = 20000;
     motor->speedLoopFreq = 5000;
     motor->positionLoopFreq = 1000;
 
     /* HFI 参数 */
+    motor->hfiIdOffsetSampleCnt = 20;
     motor->hfiVoltAmpl = 12.0f * 0.1f;
-    motor->sensorless = !true;
+    motor->hfiCurrAmpl = 0.3f;
+    motor->sensorless = true;
     pid_ctrl_init(&motor->hfiPll.pid, 3000.0f, 47000.0f, 0, 0, -2000.0f, 2000.0f);
-    lpf_init(&motor->hfiSpeedEstLpf, 100.0f, 1.0f / 20000.0f);
+    lpf_init(&motor->hfiSpeedEstLpf, 200.0f, 1.0f / 20000.0f);
 
 //    motor_set_id_ref(motor, 0.3f);
     motor_set_speed(motor, 300.0f);
@@ -39,11 +46,6 @@ int motor_create(motor_t *motor)
     motor_set_ctrl_mode(motor, MOTOR_CTRL_MODE_CURRENT_SPEED);
 //    motor_set_ctrl_mode(motor, MOTOR_CTRL_MODE_CURRENT_SPEED_POSITION);
     motor_set_status(motor, MOTOR_STATUS_STOP);
-
-
-    motor->VBus = 12.0f;
-    motor->timArr = FOC_TIM1_ARR;
-    motor->encoderCpr = 16384;
 
     // ZD2808航模电机
     if (true)
@@ -131,7 +133,7 @@ int motor_create(motor_t *motor)
 
     /* 电机转速PI控制器初始化 */
     upLimit = 6.0f; // iq
-    upLimit = 10.0f; // iq
+//    upLimit = 10.0f; // iq
     kp = 0.004f;
     ki = 0.001f;
     pid_ctrl_init(&motor->speedPid, kp, ki, 0, ki / kp, -upLimit, upLimit);
@@ -146,14 +148,18 @@ int motor_create(motor_t *motor)
 
     /* 电机位置PI控制器初始化 */
     upLimit = 600.0f; // speedRpm
-    kp = 0.01f;
-    ki = 0.0f;
+    kp = 5.5f;
+    ki = 0.1f;
     kd = 0;
     pid_ctrl_init(&motor->positionPid, kp, ki, kd, 0, -upLimit, upLimit);
 
     return 0;
 }
 
+/**
+ *
+ * @param motor
+ */
 void motor_enable(motor_t *motor)
 {
     if (motor == NULL)
@@ -167,6 +173,10 @@ void motor_enable(motor_t *motor)
     HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_3);
 }
 
+/**
+ *
+ * @param motor
+ */
 void motor_disable(motor_t *motor)
 {
     if (motor == NULL)
@@ -773,7 +783,7 @@ int motor_position_closed_loop(motor_t *motor, float posRef, float *speedRef)
         return -1;
 
     int ret = 0;
-    pid_ctrl_t *pid = &motor->speedPid;
+    pid_ctrl_t *pid = &motor->positionPid;
 
     float err = posRef - motor->angle;
     if (err > 180.0f)
@@ -783,14 +793,14 @@ int motor_position_closed_loop(motor_t *motor, float posRef, float *speedRef)
     else
         err;
 
-    float out = (pid->kp * err) + pid->integral;
 
-    /* Dynamic integral clamp */
+//    pi_ctrl(pid, err, &pid->output);
+
+    float out = (pid->kp * err) + pid->integral;
     float clampOut = FOC_CLAMP(out, pid->outLowLimit, pid->outUpLimit);
     pid->integral += (pid->ki * err) + (pid->ka * (clampOut - out));
-
-    /* Output */
     pid->output = clampOut;
+
     if (speedRef)
         *speedRef = pid->output;
 
@@ -1021,6 +1031,7 @@ int motor_ctrl_mode_loop(motor_t *motor)
 
                 //motor_round_to_angle(motor, motor->roundRef, 1, &motor->positionRef);
                 motor_position_closed_loop(motor, motor->positionRef, &motor->speedRef);
+
             }
         }
 
@@ -1069,10 +1080,10 @@ int motor_ctrl_mode_loop(motor_t *motor)
             if (motor->sensorless)
             {
                 /* 提取高频信号 */
-//                motor->hfiIalpha = 0.5f * (motor->ialpha - motor->ialphaLast);
-//                motor->hfiIbeta = 0.5f * (motor->ibeta - motor->ibetaLast);
-                motor->hfiIalpha = 0.5f * (-motor->ialpha + motor->ialphaLast);
-                motor->hfiIbeta = 0.5f * (-motor->ibeta + motor->ibetaLast);
+                motor->hfiIalpha = 0.5f * (motor->ialpha - motor->ialphaLast);
+                motor->hfiIbeta = 0.5f * (motor->ibeta - motor->ibetaLast);
+//                motor->hfiIalpha = 0.5f * (-motor->ialpha + motor->ialphaLast);
+//                motor->hfiIbeta = 0.5f * (-motor->ibeta + motor->ibetaLast);
                 motor->ialphaLast = motor->ialpha;
                 motor->ibetaLast = motor->ibeta;
 
@@ -1083,7 +1094,7 @@ int motor_ctrl_mode_loop(motor_t *motor)
                 motor->hfiIbetaLast = motor->hfiIbeta;
 
                 /* 包络线 */
-                int udhSign = sign(motor->hfiUd);
+                int udhSign = sign(motor->hfiUdOffset);
                 motor->hfiIalphaEnvelope = motor->hfiIalphaDiff * (float) udhSign;
                 motor->hfiIbetaEnvelope = motor->hfiIbetaDiff * (float) udhSign;
 
@@ -1127,6 +1138,50 @@ int motor_ctrl_mode_loop(motor_t *motor)
                 motor_set_id(motor, motor->hfiId);
                 motor_set_iq(motor, motor->hfiIq);
             }
+
+            /* HFI 磁极辨识 id偏置注入 */
+            if (true && motor->sensorless && !motor->isHfiNsiOvered)
+            {
+                static int nsiCnt = 0; // 磁极辨识计数器
+                static float idOffsetSumP = 0, idOffsetSumN = 0; // 累积的正负idh
+
+                nsiCnt++;
+                if (nsiCnt <= 200)
+                {
+                    motor_set_id_ref(motor, motor->hfiCurrAmpl);
+                }
+                else if (nsiCnt > 200 && nsiCnt <= 400)
+                {
+                    idOffsetSumP += fabsf(motor->hfiId * motor->hfiCurrAmpl);
+                }
+                else if (nsiCnt > 400 && nsiCnt <= 600)
+                {
+                    motor_set_id_ref(motor, 0);
+                }
+                else if (nsiCnt > 600 && nsiCnt <= 800)
+                {
+                    motor_set_id_ref(motor, -motor->hfiCurrAmpl);
+                }
+                else if (nsiCnt > 800 && nsiCnt <= 1000)
+                {
+                    idOffsetSumN += fabsf(motor->hfiId * -motor->hfiCurrAmpl);
+                }
+                else
+                {
+                    nsiCnt = 0;
+                    motor_set_id_ref(motor, 0);
+
+                    /* 磁极判断 */
+//                    motor->isHfiNsiOvered = true;
+                    if (idOffsetSumN < idOffsetSumP)
+                    {
+                        motor->hfiThetaEst += M_PI;
+                        if (motor->hfiThetaEst > M_TWOPI)
+                            motor->hfiThetaEst -= M_TWOPI;
+                    }
+                    idOffsetSumP = idOffsetSumN = 0;
+                }
+            }
             odriver_current_pi_ctrl(motor);
 
             /* HFI 无传感器模式，注入高频方波信号 */
@@ -1135,13 +1190,13 @@ int motor_ctrl_mode_loop(motor_t *motor)
             {
                 if (isDirChanged)
                 {
-                    motor->hfiUd = motor->hfiVoltAmpl * voltage_normalize;
+                    motor->hfiUdOffset = motor->hfiVoltAmpl * voltage_normalize;
                 }
                 else
                 {
-                    motor->hfiUd = motor->hfiVoltAmpl * voltage_normalize * -1;
+                    motor->hfiUdOffset = motor->hfiVoltAmpl * voltage_normalize * -1;
                 }
-                motor->ud += motor->hfiUd;
+                motor->ud += motor->hfiUdOffset;
                 isDirChanged = !isDirChanged;
             }
 

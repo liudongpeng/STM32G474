@@ -2094,6 +2094,8 @@ Discarded input sections
                 0x00000000        0x8 CMakeFiles/foc.elf.dir/foc/motor.c.obj
  .text.motor_round_to_angle
                 0x00000000       0x1c CMakeFiles/foc.elf.dir/foc/motor.c.obj
+ .text.motor_set_round
+                0x00000000        0xc CMakeFiles/foc.elf.dir/foc/motor.c.obj
  .text.motor_meas_phase_resistance
                 0x00000000       0xf8 CMakeFiles/foc.elf.dir/foc/motor.c.obj
  .text.motor_meas_phase_resistance2
@@ -2860,7 +2862,7 @@ LOAD d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/
                 0x08000000                g_pfnVectors
                 0x080001d8                . = ALIGN (0x4)
 
-.text           0x08000200    0x13c08
+.text           0x08000200    0x13d40
                 0x08000200                . = ALIGN (0x4)
  *(.text)
  .text          0x08000200       0x40 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
@@ -4232,488 +4234,485 @@ LOAD d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/
  .text.motor_set_speed
                 0x0800dbac        0x8 CMakeFiles/foc.elf.dir/foc/motor.c.obj
                 0x0800dbac                motor_set_speed
- .text.motor_speed_closed_loop
-                0x0800dbb4       0x24 CMakeFiles/foc.elf.dir/foc/motor.c.obj
-                0x0800dbb4                motor_speed_closed_loop
- .text.motor_position_closed_loop
-                0x0800dbd8       0xb0 CMakeFiles/foc.elf.dir/foc/motor.c.obj
-                0x0800dbd8                motor_position_closed_loop
- .text.motor_set_round
-                0x0800dc88        0xc CMakeFiles/foc.elf.dir/foc/motor.c.obj
-                0x0800dc88                motor_set_round
  .text.motor_create
-                0x0800dc94      0x250 CMakeFiles/foc.elf.dir/foc/motor.c.obj
-                0x0800dc94                motor_create
- *fill*         0x0800dee4        0x4 
+                0x0800dbb4      0x254 CMakeFiles/foc.elf.dir/foc/motor.c.obj
+                0x0800dbb4                motor_create
+ .text.motor_speed_closed_loop
+                0x0800de08       0x24 CMakeFiles/foc.elf.dir/foc/motor.c.obj
+                0x0800de08                motor_speed_closed_loop
+ .text.motor_position_closed_loop
+                0x0800de2c       0xb0 CMakeFiles/foc.elf.dir/foc/motor.c.obj
+                0x0800de2c                motor_position_closed_loop
+ *fill*         0x0800dedc        0x4 
  .text.motor_hfi_pi_calc
-                0x0800dee8       0xc0 CMakeFiles/foc.elf.dir/foc/motor.c.obj
-                0x0800dee8                motor_hfi_pi_calc
+                0x0800dee0       0xc0 CMakeFiles/foc.elf.dir/foc/motor.c.obj
+                0x0800dee0                motor_hfi_pi_calc
  .text.motor_ctrl_mode_loop
-                0x0800dfa8      0x408 CMakeFiles/foc.elf.dir/foc/motor.c.obj
-                0x0800dfa8                motor_ctrl_mode_loop
+                0x0800dfa0      0x548 CMakeFiles/foc.elf.dir/foc/motor.c.obj
+                0x0800dfa0                motor_ctrl_mode_loop
  .text.motor_status_loop
-                0x0800e3b0       0x6c CMakeFiles/foc.elf.dir/foc/motor.c.obj
-                0x0800e3b0                motor_status_loop
+                0x0800e4e8       0x6c CMakeFiles/foc.elf.dir/foc/motor.c.obj
+                0x0800e4e8                motor_status_loop
  .text.pid_ctrl_init
-                0x0800e41c       0x48 CMakeFiles/foc.elf.dir/foc/pid.c.obj
-                0x0800e41c                pid_ctrl_init
+                0x0800e554       0x48 CMakeFiles/foc.elf.dir/foc/pid.c.obj
+                0x0800e554                pid_ctrl_init
  .text.pid_ctrl_set_limit
-                0x0800e464       0x14 CMakeFiles/foc.elf.dir/foc/pid.c.obj
-                0x0800e464                pid_ctrl_set_limit
+                0x0800e59c       0x14 CMakeFiles/foc.elf.dir/foc/pid.c.obj
+                0x0800e59c                pid_ctrl_set_limit
  .text.anti_windup_pi_ctrl
-                0x0800e478       0xa8 CMakeFiles/foc.elf.dir/foc/pid.c.obj
-                0x0800e478                anti_windup_pi_ctrl
- .text.sign     0x0800e520       0x1a CMakeFiles/foc.elf.dir/foc/utils.c.obj
-                0x0800e520                sign
- *fill*         0x0800e53a        0x2 
+                0x0800e5b0       0xa8 CMakeFiles/foc.elf.dir/foc/pid.c.obj
+                0x0800e5b0                anti_windup_pi_ctrl
+ .text.sign     0x0800e658       0x1a CMakeFiles/foc.elf.dir/foc/utils.c.obj
+                0x0800e658                sign
+ *fill*         0x0800e672        0x2 
  .text.arm_sin_f32
-                0x0800e53c       0x8c C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_sin_f32.o)
-                0x0800e53c                arm_sin_f32
+                0x0800e674       0x8c C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_sin_f32.o)
+                0x0800e674                arm_sin_f32
  .text.arm_cos_f32
-                0x0800e5c8       0x94 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_cos_f32.o)
-                0x0800e5c8                arm_cos_f32
- .text.atof     0x0800e65c        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-atof.o)
-                0x0800e65c                atof
- .text.__errno  0x0800e664        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-errno.o)
-                0x0800e664                __errno
+                0x0800e700       0x94 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_cos_f32.o)
+                0x0800e700                arm_cos_f32
+ .text.atof     0x0800e794        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-atof.o)
+                0x0800e794                atof
+ .text.__errno  0x0800e79c        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-errno.o)
+                0x0800e79c                __errno
  .text.__libc_init_array
-                0x0800e670       0x48 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-init.o)
-                0x0800e670                __libc_init_array
- .text.memset   0x0800e6b8       0xa4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-memset.o)
-                0x0800e6b8                memset
+                0x0800e7a8       0x48 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-init.o)
+                0x0800e7a8                __libc_init_array
+ .text.memset   0x0800e7f0       0xa4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-memset.o)
+                0x0800e7f0                memset
  .text.cleanup_glue
-                0x0800e75c       0x48 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-reent.o)
-                0x0800e75c                cleanup_glue
+                0x0800e894       0x48 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-reent.o)
+                0x0800e894                cleanup_glue
  .text._reclaim_reent
-                0x0800e7a4       0x90 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-reent.o)
-                0x0800e7a4                _reclaim_reent
+                0x0800e8dc       0x90 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-reent.o)
+                0x0800e8dc                _reclaim_reent
  .text.two_way_long_needle
-                0x0800e834      0x2b4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strstr.o)
- .text.strstr   0x0800eae8      0x168 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strstr.o)
-                0x0800eae8                strstr
+                0x0800e96c      0x2b4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strstr.o)
+ .text.strstr   0x0800ec20      0x168 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strstr.o)
+                0x0800ec20                strstr
  .text._strtod_l
-                0x0800ec50      0xf50 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
-                0x0800ec50                _strtod_l
- .text.strtod   0x0800fba0       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
-                0x0800fba0                strtod
+                0x0800ed88      0xf50 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
+                0x0800ed88                _strtod_l
+ .text.strtod   0x0800fcd8       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
+                0x0800fcd8                strtod
  .text.startup.register_fini
-                0x0800fbc0       0x14 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-__call_atexit.o)
- .text.atexit   0x0800fbd4        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-atexit.o)
-                0x0800fbd4                atexit
+                0x0800fcf8       0x14 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-__call_atexit.o)
+ .text.atexit   0x0800fd0c        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-atexit.o)
+                0x0800fd0c                atexit
  .text.__libc_fini_array
-                0x0800fbe0       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fini.o)
-                0x0800fbe0                __libc_fini_array
+                0x0800fd18       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fini.o)
+                0x0800fd18                __libc_fini_array
  .text._malloc_trim_r
-                0x0800fc0c       0xa0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-freer.o)
-                0x0800fc0c                _malloc_trim_r
- .text._free_r  0x0800fcac      0x20c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-freer.o)
-                0x0800fcac                _free_r
- .text.rshift   0x0800feb8       0xa4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-gethex.o)
+                0x0800fd44       0xa0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-freer.o)
+                0x0800fd44                _malloc_trim_r
+ .text._free_r  0x0800fde4      0x20c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-freer.o)
+                0x0800fde4                _free_r
+ .text.rshift   0x0800fff0       0xa4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-gethex.o)
  .text.__gethex
-                0x0800ff5c      0x5d8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-gethex.o)
-                0x0800ff5c                __gethex
- .text.__match  0x08010534       0x38 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-hexnan.o)
-                0x08010534                __match
+                0x08010094      0x5d8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-gethex.o)
+                0x08010094                __gethex
+ .text.__match  0x0801066c       0x38 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-hexnan.o)
+                0x0801066c                __match
  .text.__hexnan
-                0x0801056c      0x1ac d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-hexnan.o)
-                0x0801056c                __hexnan
+                0x080106a4      0x1ac d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-hexnan.o)
+                0x080106a4                __hexnan
  .text.__locale_mb_cur_max
-                0x08010718        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-locale.o)
-                0x08010718                __locale_mb_cur_max
+                0x08010850        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-locale.o)
+                0x08010850                __locale_mb_cur_max
  .text.__retarget_lock_init_recursive
-                0x08010724        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
-                0x08010724                __retarget_lock_init_recursive
+                0x0801085c        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
+                0x0801085c                __retarget_lock_init_recursive
  .text.__retarget_lock_close_recursive
-                0x08010728        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
-                0x08010728                __retarget_lock_close_recursive
+                0x08010860        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
+                0x08010860                __retarget_lock_close_recursive
  .text.__retarget_lock_acquire_recursive
-                0x0801072c        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
-                0x0801072c                __retarget_lock_acquire_recursive
+                0x08010864        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
+                0x08010864                __retarget_lock_acquire_recursive
  .text.__retarget_lock_release_recursive
-                0x08010730        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
-                0x08010730                __retarget_lock_release_recursive
+                0x08010868        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
+                0x08010868                __retarget_lock_release_recursive
  .text._malloc_r
-                0x08010734      0x560 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mallocr.o)
-                0x08010734                _malloc_r
+                0x0801086c      0x560 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mallocr.o)
+                0x0801086c                _malloc_r
  .text.__ascii_mbtowc
-                0x08010c94       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mbtowc_r.o)
-                0x08010c94                __ascii_mbtowc
- .text.memcmp   0x08010cc0       0x64 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-memcmp.o)
-                0x08010cc0                memcmp
+                0x08010dcc       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mbtowc_r.o)
+                0x08010dcc                __ascii_mbtowc
+ .text.memcmp   0x08010df8       0x64 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-memcmp.o)
+                0x08010df8                memcmp
  .text.__malloc_lock
-                0x08010d24        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mlock.o)
-                0x08010d24                __malloc_lock
+                0x08010e5c        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mlock.o)
+                0x08010e5c                __malloc_lock
  .text.__malloc_unlock
-                0x08010d30        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mlock.o)
-                0x08010d30                __malloc_unlock
- .text._Balloc  0x08010d3c       0x4c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08010d3c                _Balloc
- .text._Bfree   0x08010d88       0x14 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08010d88                _Bfree
+                0x08010e68        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mlock.o)
+                0x08010e68                __malloc_unlock
+ .text._Balloc  0x08010e74       0x4c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08010e74                _Balloc
+ .text._Bfree   0x08010ec0       0x14 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08010ec0                _Bfree
  .text.__multadd
-                0x08010d9c       0xa8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08010d9c                __multadd
- .text.__s2b    0x08010e44       0xb4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08010e44                __s2b
+                0x08010ed4       0xa8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08010ed4                __multadd
+ .text.__s2b    0x08010f7c       0xb4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08010f7c                __s2b
  .text.__hi0bits
-                0x08010ef8       0x40 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08010ef8                __hi0bits
+                0x08011030       0x40 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08011030                __hi0bits
  .text.__lo0bits
-                0x08010f38       0x60 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08010f38                __lo0bits
- .text.__i2b    0x08010f98       0x5c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08010f98                __i2b
+                0x08011070       0x60 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08011070                __lo0bits
+ .text.__i2b    0x080110d0       0x5c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x080110d0                __i2b
  .text.__multiply
-                0x08010ff4      0x15c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08010ff4                __multiply
+                0x0801112c      0x15c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x0801112c                __multiply
  .text.__pow5mult
-                0x08011150       0xc0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08011150                __pow5mult
+                0x08011288       0xc0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08011288                __pow5mult
  .text.__lshift
-                0x08011210       0xf0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08011210                __lshift
- .text.__mcmp   0x08011300       0x44 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08011300                __mcmp
- .text.__mdiff  0x08011344      0x14c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08011344                __mdiff
- .text.__ulp    0x08011490       0x60 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08011490                __ulp
- .text.__b2d    0x080114f0       0xc0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x080114f0                __b2d
- .text.__d2b    0x080115b0       0xd0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x080115b0                __d2b
- .text.__ratio  0x08011680       0x5c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08011680                __ratio
+                0x08011348       0xf0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08011348                __lshift
+ .text.__mcmp   0x08011438       0x44 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08011438                __mcmp
+ .text.__mdiff  0x0801147c      0x14c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x0801147c                __mdiff
+ .text.__ulp    0x080115c8       0x60 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x080115c8                __ulp
+ .text.__b2d    0x08011628       0xc0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08011628                __b2d
+ .text.__d2b    0x080116e8       0xd0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x080116e8                __d2b
+ .text.__ratio  0x080117b8       0x5c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x080117b8                __ratio
  .text.__copybits
-                0x080116dc       0x5c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x080116dc                __copybits
+                0x08011814       0x5c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08011814                __copybits
  .text.__any_on
-                0x08011738       0x64 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08011738                __any_on
- *fill*         0x0801179c        0x4 
- .text.nan      0x080117a0       0x10 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-s_nan.o)
-                0x080117a0                nan
- .text._sbrk_r  0x080117b0       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-sbrkr.o)
-                0x080117b0                _sbrk_r
- .text.strchr   0x080117d4       0xcc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strchr.o)
-                0x080117d4                strchr
- .text.strncmp  0x080118a0       0x80 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strncmp.o)
-                0x080118a0                strncmp
- .text.strnlen  0x08011920       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strnlen.o)
-                0x08011920                strnlen
+                0x08011870       0x64 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08011870                __any_on
+ *fill*         0x080118d4        0x4 
+ .text.nan      0x080118d8       0x10 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-s_nan.o)
+                0x080118d8                nan
+ .text._sbrk_r  0x080118e8       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-sbrkr.o)
+                0x080118e8                _sbrk_r
+ .text.strchr   0x0801190c       0xcc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strchr.o)
+                0x0801190c                strchr
+ .text.strncmp  0x080119d8       0x80 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strncmp.o)
+                0x080119d8                strncmp
+ .text.strnlen  0x08011a58       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strnlen.o)
+                0x08011a58                strnlen
  .text.__ascii_wctomb
-                0x08011944       0x1c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wctomb_r.o)
-                0x08011944                __ascii_wctomb
+                0x08011a7c       0x1c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wctomb_r.o)
+                0x08011a7c                __ascii_wctomb
  .text.__register_exitproc
-                0x08011960       0x8c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-__atexit.o)
-                0x08011960                __register_exitproc
+                0x08011a98       0x8c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-__atexit.o)
+                0x08011a98                __register_exitproc
  .text.__assert_func
-                0x080119ec       0x40 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-assert.o)
-                0x080119ec                __assert_func
+                0x08011b24       0x40 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-assert.o)
+                0x08011b24                __assert_func
  .text._calloc_r
-                0x08011a2c       0x78 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-callocr.o)
-                0x08011a2c                _calloc_r
+                0x08011b64       0x78 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-callocr.o)
+                0x08011b64                _calloc_r
  .text.fiprintf
-                0x08011aa4       0x28 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fiprintf.o)
-                0x08011aa4                fiprintf
+                0x08011bdc       0x28 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fiprintf.o)
+                0x08011bdc                fiprintf
  .text.__sprint_r.part.0
-                0x08011acc       0x78 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
+                0x08011c04       0x78 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
  .text._vfiprintf_r
-                0x08011b44      0xdfc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
-                0x08011b44                _vfiprintf_r
+                0x08011c7c      0xdfc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
+                0x08011c7c                _vfiprintf_r
  .text.__sbprintf
-                0x08012940       0x80 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
+                0x08012a78       0x80 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
  .text.__swsetup_r
-                0x080129c0       0xd4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wsetup.o)
-                0x080129c0                __swsetup_r
- .text.abort    0x08012a94       0x10 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-abort.o)
-                0x08012a94                abort
+                0x08012af8       0xd4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wsetup.o)
+                0x08012af8                __swsetup_r
+ .text.abort    0x08012bcc       0x10 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-abort.o)
+                0x08012bcc                abort
  .text.__sflush_r
-                0x08012aa4      0x130 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fflush.o)
-                0x08012aa4                __sflush_r
+                0x08012bdc      0x130 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fflush.o)
+                0x08012bdc                __sflush_r
  .text._fflush_r
-                0x08012bd4       0x5c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fflush.o)
-                0x08012bd4                _fflush_r
+                0x08012d0c       0x5c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fflush.o)
+                0x08012d0c                _fflush_r
  .text._cleanup_r
-                0x08012c30        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-findfp.o)
-                0x08012c30                _cleanup_r
- .text.__sinit  0x08012c3c      0x10c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-findfp.o)
-                0x08012c3c                __sinit
+                0x08012d68        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-findfp.o)
+                0x08012d68                _cleanup_r
+ .text.__sinit  0x08012d74      0x10c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-findfp.o)
+                0x08012d74                __sinit
  .text.__sfp_lock_acquire
-                0x08012d48        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-findfp.o)
-                0x08012d48                __sfp_lock_acquire
+                0x08012e80        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-findfp.o)
+                0x08012e80                __sfp_lock_acquire
  .text.__sfp_lock_release
-                0x08012d54        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-findfp.o)
-                0x08012d54                __sfp_lock_release
+                0x08012e8c        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-findfp.o)
+                0x08012e8c                __sfp_lock_release
  .text.__fputwc
-                0x08012d60       0xa8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fputwc.o)
-                0x08012d60                __fputwc
+                0x08012e98       0xa8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fputwc.o)
+                0x08012e98                __fputwc
  .text._fputwc_r
-                0x08012e08       0x68 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fputwc.o)
-                0x08012e08                _fputwc_r
+                0x08012f40       0x68 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fputwc.o)
+                0x08012f40                _fputwc_r
  .text.__sfvwrite_r
-                0x08012e70      0x2f0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fvwrite.o)
-                0x08012e70                __sfvwrite_r
+                0x08012fa8      0x2f0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fvwrite.o)
+                0x08012fa8                __sfvwrite_r
  .text._fwalk_reent
-                0x08013160       0x48 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fwalk.o)
-                0x08013160                _fwalk_reent
+                0x08013298       0x48 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fwalk.o)
+                0x08013298                _fwalk_reent
  .text._localeconv_r
-                0x080131a8        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-localeconv.o)
-                0x080131a8                _localeconv_r
+                0x080132e0        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-localeconv.o)
+                0x080132e0                _localeconv_r
  .text.__smakebuf_r
-                0x080131b0       0xe0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-makebuf.o)
-                0x080131b0                __smakebuf_r
- .text.memmove  0x08013290       0xf8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-memmove.o)
-                0x08013290                memmove
+                0x080132e8       0xe0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-makebuf.o)
+                0x080132e8                __smakebuf_r
+ .text.memmove  0x080133c8       0xf8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-memmove.o)
+                0x080133c8                memmove
  .text._realloc_r
-                0x08013388      0x3d8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-reallocr.o)
-                0x08013388                _realloc_r
- .text.raise    0x08013760       0x5c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-signal.o)
-                0x08013760                raise
- .text._kill_r  0x080137bc       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-signalr.o)
-                0x080137bc                _kill_r
+                0x080134c0      0x3d8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-reallocr.o)
+                0x080134c0                _realloc_r
+ .text.raise    0x08013898       0x5c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-signal.o)
+                0x08013898                raise
+ .text._kill_r  0x080138f4       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-signalr.o)
+                0x080138f4                _kill_r
  .text._getpid_r
-                0x080137e8        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-signalr.o)
-                0x080137e8                _getpid_r
- .text.__sread  0x080137ec       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-stdio.o)
-                0x080137ec                __sread
+                0x08013920        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-signalr.o)
+                0x08013920                _getpid_r
+ .text.__sread  0x08013924       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-stdio.o)
+                0x08013924                __sread
  .text.__swrite
-                0x08013810       0x40 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-stdio.o)
-                0x08013810                __swrite
- .text.__sseek  0x08013850       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-stdio.o)
-                0x08013850                __sseek
+                0x08013948       0x40 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-stdio.o)
+                0x08013948                __swrite
+ .text.__sseek  0x08013988       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-stdio.o)
+                0x08013988                __sseek
  .text.__sclose
-                0x08013870        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-stdio.o)
-                0x08013870                __sclose
- .text.strncpy  0x08013878       0x64 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strncpy.o)
-                0x08013878                strncpy
+                0x080139a8        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-stdio.o)
+                0x080139a8                __sclose
+ .text.strncpy  0x080139b0       0x64 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strncpy.o)
+                0x080139b0                strncpy
  .text.__swbuf_r
-                0x080138dc       0xb0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wbuf.o)
-                0x080138dc                __swbuf_r
+                0x08013a14       0xb0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wbuf.o)
+                0x08013a14                __swbuf_r
  .text._wcrtomb_r
-                0x0801398c       0x3c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wcrtomb.o)
-                0x0801398c                _wcrtomb_r
+                0x08013ac4       0x3c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wcrtomb.o)
+                0x08013ac4                _wcrtomb_r
  .text._write_r
-                0x080139c8       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-writer.o)
-                0x080139c8                _write_r
+                0x08013b00       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-writer.o)
+                0x08013b00                _write_r
  .text._close_r
-                0x080139f4       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-closer.o)
-                0x080139f4                _close_r
+                0x08013b2c       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-closer.o)
+                0x08013b2c                _close_r
  .text._fclose_r
-                0x08013a18       0xcc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fclose.o)
-                0x08013a18                _fclose_r
+                0x08013b50       0xcc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fclose.o)
+                0x08013b50                _fclose_r
  .text._fstat_r
-                0x08013ae4       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fstatr.o)
-                0x08013ae4                _fstat_r
+                0x08013c1c       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fstatr.o)
+                0x08013c1c                _fstat_r
  .text._isatty_r
-                0x08013b10       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-isattyr.o)
-                0x08013b10                _isatty_r
+                0x08013c48       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-isattyr.o)
+                0x08013c48                _isatty_r
  .text._lseek_r
-                0x08013b34       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lseekr.o)
-                0x08013b34                _lseek_r
- .text._read_r  0x08013b60       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-readr.o)
-                0x08013b60                _read_r
- .text.fmaxf    0x08013b8c       0x3c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-sf_fmax.o)
-                0x08013b8c                fmaxf
- .text.fminf    0x08013bc8       0x3c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-sf_fmin.o)
-                0x08013bc8                fminf
+                0x08013c6c       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lseekr.o)
+                0x08013c6c                _lseek_r
+ .text._read_r  0x08013c98       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-readr.o)
+                0x08013c98                _read_r
+ .text.fmaxf    0x08013cc4       0x3c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-sf_fmax.o)
+                0x08013cc4                fmaxf
+ .text.fminf    0x08013d00       0x3c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-sf_fmin.o)
+                0x08013d00                fminf
  .text.__fpclassifyf
-                0x08013c04       0x38 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-sf_fpclassify.o)
-                0x08013c04                __fpclassifyf
- .text.fmodf    0x08013c3c       0x48 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_fmod.o)
-                0x08013c3c                fmodf
- .text.sqrtf    0x08013c84       0x44 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_sqrt.o)
-                0x08013c84                sqrtf
+                0x08013d3c       0x38 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-sf_fpclassify.o)
+                0x08013d3c                __fpclassifyf
+ .text.fmodf    0x08013d74       0x48 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_fmod.o)
+                0x08013d74                fmodf
+ .text.sqrtf    0x08013dbc       0x44 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_sqrt.o)
+                0x08013dbc                sqrtf
  .text.__ieee754_fmodf
-                0x08013cc8      0x120 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_fmod.o)
-                0x08013cc8                __ieee754_fmodf
+                0x08013e00      0x120 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_fmod.o)
+                0x08013e00                __ieee754_fmodf
  .text.__ieee754_sqrtf
-                0x08013de8        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_sqrt.o)
-                0x08013de8                __ieee754_sqrtf
+                0x08013f20        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_sqrt.o)
+                0x08013f20                __ieee754_sqrtf
  *(.glue_7)
- .glue_7        0x08013df0        0x0 linker stubs
+ .glue_7        0x08013f28        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x08013df0        0x0 linker stubs
+ .glue_7t       0x08013f28        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x08013df0        0x0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .eh_frame      0x08013f28        0x0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
  *(.init)
- .init          0x08013df0        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
-                0x08013df0                _init
- .init          0x08013df4        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
+ .init          0x08013f28        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
+                0x08013f28                _init
+ .init          0x08013f2c        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
  *(.fini)
- .fini          0x08013dfc        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
-                0x08013dfc                _fini
- .fini          0x08013e00        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
-                0x08013e08                . = ALIGN (0x4)
-                0x08013e08                _etext = .
+ .fini          0x08013f34        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
+                0x08013f34                _fini
+ .fini          0x08013f38        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
+                0x08013f40                . = ALIGN (0x4)
+                0x08013f40                _etext = .
 
-.vfp11_veneer   0x08013e08        0x0
- .vfp11_veneer  0x08013e08        0x0 linker stubs
+.vfp11_veneer   0x08013f40        0x0
+ .vfp11_veneer  0x08013f40        0x0 linker stubs
 
-.v4_bx          0x08013e08        0x0
- .v4_bx         0x08013e08        0x0 linker stubs
+.v4_bx          0x08013f40        0x0
+ .v4_bx         0x08013f40        0x0 linker stubs
 
-.iplt           0x08013e08        0x0
- .iplt          0x08013e08        0x0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+.iplt           0x08013f40        0x0
+ .iplt          0x08013f40        0x0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.rodata         0x08013e08      0xee8
-                0x08013e08                . = ALIGN (0x4)
+.rodata         0x08013f40      0xee8
+                0x08013f40                . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
  .rodata.HAL_UARTEx_RxEventCallback.str1.4
-                0x08013e08       0x9a CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
- *fill*         0x08013ea2        0x2 
+                0x08013f40       0x9a CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
+ *fill*         0x08013fda        0x2 
  .rodata.str1.4
-                0x08013ea4       0x1c CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
+                0x08013fdc       0x1c CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
  .rodata.defaultTask_attributes
-                0x08013ec0       0x24 CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
-                0x08013ec0                defaultTask_attributes
+                0x08013ff8       0x24 CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
+                0x08013ff8                defaultTask_attributes
  .rodata.gBtnScanTask_attributes
-                0x08013ee4       0x24 CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
-                0x08013ee4                gBtnScanTask_attributes
+                0x0801401c       0x24 CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
+                0x0801401c                gBtnScanTask_attributes
  .rodata.AHBPrescTable
-                0x08013f08       0x10 CMakeFiles/foc.elf.dir/Core/Src/system_stm32g4xx.c.obj
-                0x08013f08                AHBPrescTable
+                0x08014040       0x10 CMakeFiles/foc.elf.dir/Core/Src/system_stm32g4xx.c.obj
+                0x08014040                AHBPrescTable
  .rodata.APBPrescTable
-                0x08013f18        0x8 CMakeFiles/foc.elf.dir/Core/Src/system_stm32g4xx.c.obj
-                0x08013f18                APBPrescTable
+                0x08014050        0x8 CMakeFiles/foc.elf.dir/Core/Src/system_stm32g4xx.c.obj
+                0x08014050                APBPrescTable
  .rodata.UARTPrescTable
-                0x08013f20       0x18 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj
-                0x08013f20                UARTPrescTable
+                0x08014058       0x18 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj
+                0x08014058                UARTPrescTable
  .rodata.denominator.0
-                0x08013f38        0x8 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj
+                0x08014070        0x8 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj
  .rodata.numerator.1
-                0x08013f40        0x8 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj
+                0x08014078        0x8 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj
  .rodata.vTaskStartScheduler.str1.4
-                0x08013f48        0x5 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
- *fill*         0x08013f4d        0x3 
+                0x08014080        0x5 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+ *fill*         0x08014085        0x3 
  .rodata.prvCheckForValidListAndQueue.str1.4
-                0x08013f50        0x5 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
- *fill*         0x08013f55        0x3 
+                0x08014088        0x5 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+ *fill*         0x0801408d        0x3 
  .rodata.xTimerCreateTimerTask.str1.4
-                0x08013f58        0x8 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+                0x08014090        0x8 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
  .rodata.CDC_Receive_FS.str1.4
-                0x08013f60        0x8 CMakeFiles/foc.elf.dir/USB_Device/App/usbd_cdc_if.c.obj
+                0x08014098        0x8 CMakeFiles/foc.elf.dir/USB_Device/App/usbd_cdc_if.c.obj
                                  0x7c (size before relaxing)
  .rodata.USBD_CDC_ProductStrDescriptor.str1.4
-                0x08013f68       0x16 CMakeFiles/foc.elf.dir/USB_Device/App/usbd_desc.c.obj
- *fill*         0x08013f7e        0x2 
+                0x080140a0       0x16 CMakeFiles/foc.elf.dir/USB_Device/App/usbd_desc.c.obj
+ *fill*         0x080140b6        0x2 
  .rodata.USBD_CDC_ManufacturerStrDescriptor.str1.4
-                0x08013f80       0x1c CMakeFiles/foc.elf.dir/USB_Device/App/usbd_desc.c.obj
+                0x080140b8       0x1c CMakeFiles/foc.elf.dir/USB_Device/App/usbd_desc.c.obj
  .rodata.USBD_CDC_ConfigStrDescriptor.str1.4
-                0x08013f9c        0xb CMakeFiles/foc.elf.dir/USB_Device/App/usbd_desc.c.obj
- *fill*         0x08013fa7        0x1 
+                0x080140d4        0xb CMakeFiles/foc.elf.dir/USB_Device/App/usbd_desc.c.obj
+ *fill*         0x080140df        0x1 
  .rodata.USBD_CDC_InterfaceStrDescriptor.str1.4
-                0x08013fa8        0xe CMakeFiles/foc.elf.dir/USB_Device/App/usbd_desc.c.obj
- *fill*         0x08013fb6        0x2 
+                0x080140e0        0xe CMakeFiles/foc.elf.dir/USB_Device/App/usbd_desc.c.obj
+ *fill*         0x080140ee        0x2 
  .rodata.sinTable_f32
-                0x08013fb8      0x804 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08013fb8                sinTable_f32
+                0x080140f0      0x804 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x080140f0                sinTable_f32
  .rodata._global_impure_ptr
-                0x080147bc        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-impure.o)
-                0x080147bc                _global_impure_ptr
+                0x080148f4        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-impure.o)
+                0x080148f4                _global_impure_ptr
  .rodata._strtod_l.str1.4
-                0x080147c0        0xf d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
+                0x080148f8        0xf d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
                                  0x11 (size before relaxing)
- *fill*         0x080147cf        0x1 
- .rodata.fpi.1  0x080147d0       0x14 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
+ *fill*         0x08014907        0x1 
+ .rodata.fpi.1  0x08014908       0x14 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
  .rodata.fpinan.0
-                0x080147e4       0x14 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
+                0x0801491c       0x14 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
  .rodata.tinytens
-                0x080147f8       0x28 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
+                0x08014930       0x28 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
  .rodata.__gethex.str1.4
-                0x08014820       0x9a d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-gethex.o)
- *fill*         0x080148ba        0x2 
+                0x08014958       0x9a d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-gethex.o)
+ *fill*         0x080149f2        0x2 
  .rodata.__hexdig
-                0x080148bc      0x100 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-gethex.o)
-                0x080148bc                __hexdig
+                0x080149f4      0x100 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-gethex.o)
+                0x080149f4                __hexdig
  .rodata.str1.4
-                0x080149bc        0x2 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lnumeric.o)
+                0x08014af4        0x2 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lnumeric.o)
                                   0x5 (size before relaxing)
- *fill*         0x080149be        0x2 
+ *fill*         0x08014af6        0x2 
  .rodata._C_numeric_locale
-                0x080149c0        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lnumeric.o)
-                0x080149c0                _C_numeric_locale
+                0x08014af8        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lnumeric.o)
+                0x08014af8                _C_numeric_locale
  .rodata._setlocale_r.str1.4
-                0x080149cc        0xa d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-locale.o)
+                0x08014b04        0xa d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-locale.o)
                                   0xd (size before relaxing)
  .rodata.str1.4
-                0x080149d6        0x2 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-locale.o)
- *fill*         0x080149d6        0x2 
+                0x08014b0e        0x2 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-locale.o)
+ *fill*         0x08014b0e        0x2 
  .rodata.__multadd.str1.4
-                0x080149d8       0x7f d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08014b10       0x7f d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
                                  0x93 (size before relaxing)
- *fill*         0x08014a57        0x1 
+ *fill*         0x08014b8f        0x1 
  .rodata.__mprec_bigtens
-                0x08014a58       0x28 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08014a58                __mprec_bigtens
+                0x08014b90       0x28 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08014b90                __mprec_bigtens
  .rodata.__mprec_tens
-                0x08014a80       0xc8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
-                0x08014a80                __mprec_tens
- .rodata.p05.0  0x08014b48        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08014bb8       0xc8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+                0x08014bb8                __mprec_tens
+ .rodata.p05.0  0x08014c80        0xc d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
  .rodata.__assert_func.str1.4
-                0x08014b54       0x3f d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-assert.o)
+                0x08014c8c       0x3f d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-assert.o)
                                  0x43 (size before relaxing)
- *fill*         0x08014b93        0x1 
+ *fill*         0x08014ccb        0x1 
  .rodata._ctype_
-                0x08014b94      0x101 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-ctype_.o)
-                0x08014b94                _ctype_
- *fill*         0x08014c95        0x3 
+                0x08014ccc      0x101 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-ctype_.o)
+                0x08014ccc                _ctype_
+ *fill*         0x08014dcd        0x3 
  .rodata._vfiprintf_r.str1.4
-                0x08014c98       0x2f d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
- *fill*         0x08014cc7        0x1 
+                0x08014dd0       0x2f d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
+ *fill*         0x08014dff        0x1 
  .rodata.blanks.1
-                0x08014cc8       0x10 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
+                0x08014e00       0x10 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
  .rodata.zeroes.0
-                0x08014cd8       0x10 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
- .rodata.Zero   0x08014ce8        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_fmod.o)
-                0x08014cf0                . = ALIGN (0x4)
+                0x08014e10       0x10 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
+ .rodata.Zero   0x08014e20        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_fmod.o)
+                0x08014e28                . = ALIGN (0x4)
 
-.ARM.extab      0x08014cf0        0x0
-                0x08014cf0                . = ALIGN (0x4)
+.ARM.extab      0x08014e28        0x0
+                0x08014e28                . = ALIGN (0x4)
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x08014cf0                . = ALIGN (0x4)
+                0x08014e28                . = ALIGN (0x4)
 
-.ARM            0x08014cf0        0x8
-                0x08014cf0                . = ALIGN (0x4)
-                0x08014cf0                __exidx_start = .
+.ARM            0x08014e28        0x8
+                0x08014e28                . = ALIGN (0x4)
+                0x08014e28                __exidx_start = .
  *(.ARM.exidx*)
- .ARM.exidx     0x08014cf0        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
-                0x08014cf8                __exidx_end = .
-                0x08014cf8                . = ALIGN (0x4)
+ .ARM.exidx     0x08014e28        0x8 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+                0x08014e30                __exidx_end = .
+                0x08014e30                . = ALIGN (0x4)
 
-.rel.dyn        0x08014cf8        0x0
- .rel.iplt      0x08014cf8        0x0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+.rel.dyn        0x08014e30        0x0
+ .rel.iplt      0x08014e30        0x0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.preinit_array  0x08014cf8        0x0
-                0x08014cf8                . = ALIGN (0x4)
-                0x08014cf8                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x08014e30        0x0
+                0x08014e30                . = ALIGN (0x4)
+                0x08014e30                PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x08014cf8                PROVIDE (__preinit_array_end = .)
-                0x08014cf8                . = ALIGN (0x4)
+                0x08014e30                PROVIDE (__preinit_array_end = .)
+                0x08014e30                . = ALIGN (0x4)
 
-.init_array     0x08014cf8        0x8
-                0x08014cf8                . = ALIGN (0x4)
-                0x08014cf8                PROVIDE (__init_array_start = .)
+.init_array     0x08014e30        0x8
+                0x08014e30                . = ALIGN (0x4)
+                0x08014e30                PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  .init_array.00000
-                0x08014cf8        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-__call_atexit.o)
+                0x08014e30        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-__call_atexit.o)
  *(.init_array*)
- .init_array    0x08014cfc        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
-                0x08014d00                PROVIDE (__init_array_end = .)
-                0x08014d00                . = ALIGN (0x4)
+ .init_array    0x08014e34        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x08014e38                PROVIDE (__init_array_end = .)
+                0x08014e38                . = ALIGN (0x4)
 
-.fini_array     0x08014d00        0x4
-                0x08014d00                . = ALIGN (0x4)
-                0x08014d00                PROVIDE (__fini_array_start = .)
+.fini_array     0x08014e38        0x4
+                0x08014e38                . = ALIGN (0x4)
+                0x08014e38                PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x08014d00        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
-                0x08014d04                PROVIDE (__fini_array_end = .)
-                0x08014d04                . = ALIGN (0x4)
-                0x08014d04                _sidata = LOADADDR (.data)
+ .fini_array    0x08014e38        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x08014e3c                PROVIDE (__fini_array_end = .)
+                0x08014e3c                . = ALIGN (0x4)
+                0x08014e3c                _sidata = LOADADDR (.data)
 
-.data           0x20000000      0xbe4 load address 0x08014d04
+.data           0x20000000      0xbe4 load address 0x08014e3c
                 0x20000000                . = ALIGN (0x4)
                 0x20000000                _sdata = .
  *(.data)
@@ -4797,11 +4796,11 @@ LOAD d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/
                 0x20000be4                . = ALIGN (0x4)
                 0x20000be4                _edata = .
 
-.igot.plt       0x20000be4        0x0 load address 0x080158e8
+.igot.plt       0x20000be4        0x0 load address 0x08015a20
  .igot.plt      0x20000be4        0x0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
                 0x20000be4                . = ALIGN (0x4)
 
-.bss            0x20000be8     0x69d4 load address 0x080158e8
+.bss            0x20000be8     0x69b4 load address 0x08015a20
                 0x20000be8                _sbss = .
                 0x20000be8                __bss_start__ = _sbss
  *(.bss)
@@ -4976,58 +4975,63 @@ LOAD d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/
                 0x20007224                led2
  .bss.led3      0x2000722c        0x8 CMakeFiles/foc.elf.dir/bsp/bsp.c.obj
                 0x2000722c                led3
- .bss.motor1    0x20007234      0x32c CMakeFiles/foc.elf.dir/bsp/bsp.c.obj
+ .bss.motor1    0x20007234      0x300 CMakeFiles/foc.elf.dir/bsp/bsp.c.obj
                 0x20007234                motor1
- .bss.mt6701    0x20007560       0x10 CMakeFiles/foc.elf.dir/bsp/bsp.c.obj
-                0x20007560                mt6701
+ .bss.mt6701    0x20007534       0x10 CMakeFiles/foc.elf.dir/bsp/bsp.c.obj
+                0x20007534                mt6701
  .bss.s_btn_list_head
-                0x20007570        0x4 CMakeFiles/foc.elf.dir/bsp/button/button.c.obj
- .bss.errno     0x20007574        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-reent.o)
-                0x20007574                errno
+                0x20007544        0x4 CMakeFiles/foc.elf.dir/bsp/button/button.c.obj
+ .bss.idOffsetSumN.1
+                0x20007548        0x4 CMakeFiles/foc.elf.dir/foc/motor.c.obj
+ .bss.idOffsetSumP.2
+                0x2000754c        0x4 CMakeFiles/foc.elf.dir/foc/motor.c.obj
+ .bss.nsiCnt.3  0x20007550        0x4 CMakeFiles/foc.elf.dir/foc/motor.c.obj
+ .bss.errno     0x20007554        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-reent.o)
+                0x20007554                errno
  .bss.__lock___atexit_recursive_mutex
-                0x20007578        0x1 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
-                0x20007578                __lock___atexit_recursive_mutex
- *fill*         0x20007579        0x3 
+                0x20007558        0x1 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
+                0x20007558                __lock___atexit_recursive_mutex
+ *fill*         0x20007559        0x3 
  .bss.__lock___malloc_recursive_mutex
-                0x2000757c        0x1 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
-                0x2000757c                __lock___malloc_recursive_mutex
- *fill*         0x2000757d        0x3 
+                0x2000755c        0x1 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
+                0x2000755c                __lock___malloc_recursive_mutex
+ *fill*         0x2000755d        0x3 
  .bss.__lock___sfp_recursive_mutex
-                0x20007580        0x1 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
-                0x20007580                __lock___sfp_recursive_mutex
- *fill*         0x20007581        0x3 
+                0x20007560        0x1 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
+                0x20007560                __lock___sfp_recursive_mutex
+ *fill*         0x20007561        0x3 
  .bss.__lock___sinit_recursive_mutex
-                0x20007584        0x1 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
-                0x20007584                __lock___sinit_recursive_mutex
- *fill*         0x20007585        0x3 
+                0x20007564        0x1 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
+                0x20007564                __lock___sinit_recursive_mutex
+ *fill*         0x20007565        0x3 
  .bss.__malloc_current_mallinfo
-                0x20007588       0x28 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mallocr.o)
-                0x20007588                __malloc_current_mallinfo
+                0x20007568       0x28 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mallocr.o)
+                0x20007568                __malloc_current_mallinfo
  .bss.__malloc_max_sbrked_mem
-                0x200075b0        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mallocr.o)
-                0x200075b0                __malloc_max_sbrked_mem
+                0x20007590        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mallocr.o)
+                0x20007590                __malloc_max_sbrked_mem
  .bss.__malloc_max_total_mem
-                0x200075b4        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mallocr.o)
-                0x200075b4                __malloc_max_total_mem
+                0x20007594        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mallocr.o)
+                0x20007594                __malloc_max_total_mem
  .bss.__malloc_top_pad
-                0x200075b8        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mallocr.o)
-                0x200075b8                __malloc_top_pad
+                0x20007598        0x4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mallocr.o)
+                0x20007598                __malloc_top_pad
  *(COMMON)
-                0x200075bc                . = ALIGN (0x4)
-                0x200075bc                _ebss = .
-                0x200075bc                __bss_end__ = _ebss
+                0x2000759c                . = ALIGN (0x4)
+                0x2000759c                _ebss = .
+                0x2000759c                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x200075bc     0x1004 load address 0x080158e8
-                0x200075c0                . = ALIGN (0x8)
- *fill*         0x200075bc        0x4 
+                0x2000759c     0x1004 load address 0x08015a20
+                0x200075a0                . = ALIGN (0x8)
+ *fill*         0x2000759c        0x4 
                 [!provide]                PROVIDE (end = .)
-                0x200075c0                PROVIDE (_end = .)
-                0x20007dc0                . = (. + _Min_Heap_Size)
- *fill*         0x200075c0      0x800 
-                0x200085c0                . = (. + _Min_Stack_Size)
- *fill*         0x20007dc0      0x800 
-                0x200085c0                . = ALIGN (0x8)
+                0x200075a0                PROVIDE (_end = .)
+                0x20007da0                . = (. + _Min_Heap_Size)
+ *fill*         0x200075a0      0x800 
+                0x200085a0                . = (. + _Min_Stack_Size)
+ *fill*         0x20007da0      0x800 
+                0x200085a0                . = ALIGN (0x8)
 
 /DISCARD/
  libc.a(*)
@@ -5311,67 +5315,67 @@ LOAD d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm
 LOAD d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a
 LOAD d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a
 
-.debug_info     0x00000000    0x4fde1
+.debug_info     0x00000000    0x4ff18
  .debug_info    0x00000000     0x16b5 CMakeFiles/foc.elf.dir/Core/Src/adc.c.obj
- .debug_info    0x000016b5     0x27c5 CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
- .debug_info    0x00003e7a      0x641 CMakeFiles/foc.elf.dir/Core/Src/dma.c.obj
- .debug_info    0x000044bb      0x678 CMakeFiles/foc.elf.dir/Core/Src/gpio.c.obj
- .debug_info    0x00004b33      0xbfa CMakeFiles/foc.elf.dir/Core/Src/main.c.obj
- .debug_info    0x0000572d      0xc70 CMakeFiles/foc.elf.dir/Core/Src/spi.c.obj
- .debug_info    0x0000639d      0x60c CMakeFiles/foc.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj
- .debug_info    0x000069a9      0xf0d CMakeFiles/foc.elf.dir/Core/Src/stm32g4xx_hal_timebase_tim.c.obj
- .debug_info    0x000078b6     0x169f CMakeFiles/foc.elf.dir/Core/Src/stm32g4xx_it.c.obj
- .debug_info    0x00008f55      0x7af CMakeFiles/foc.elf.dir/Core/Src/syscalls.c.obj
- .debug_info    0x00009704      0x174 CMakeFiles/foc.elf.dir/Core/Src/sysmem.c.obj
- .debug_info    0x00009878      0x5b4 CMakeFiles/foc.elf.dir/Core/Src/system_stm32g4xx.c.obj
- .debug_info    0x00009e2c     0x10f7 CMakeFiles/foc.elf.dir/Core/Src/tim.c.obj
- .debug_info    0x0000af23     0x12ad CMakeFiles/foc.elf.dir/Core/Src/usart.c.obj
- .debug_info    0x0000c1d0       0x22 CMakeFiles/foc.elf.dir/Core/Startup/startup_stm32g474retx.s.obj
- .debug_info    0x0000c1f2      0xc72 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj
- .debug_info    0x0000ce64     0x383f CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj
- .debug_info    0x000106a3     0x30b7 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.obj
- .debug_info    0x0001375a     0x10fb CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.obj
- .debug_info    0x00014855      0xa56 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj
- .debug_info    0x000152ab      0x865 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.obj
- .debug_info    0x00015b10     0x1b5c CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd.c.obj
- .debug_info    0x0001766c      0x9e6 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd_ex.c.obj
- .debug_info    0x00018052      0xa07 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.obj
- .debug_info    0x00018a59      0xefa CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.obj
- .debug_info    0x00019953      0xf39 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.obj
- .debug_info    0x0001a88c     0x22bf CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi.c.obj
- .debug_info    0x0001cb4b     0x410f CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.obj
- .debug_info    0x00020c5a     0x2538 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.obj
- .debug_info    0x00023192     0x6404 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj
- .debug_info    0x00029596     0x1281 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj
- .debug_info    0x0002a817     0x1b07 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usb.c.obj
- .debug_info    0x0002c31e     0x145a CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c.obj
- .debug_info    0x0002d778      0xe47 CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c.obj
- .debug_info    0x0002e5bf     0x1324 CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c.obj
- .debug_info    0x0002f8e3      0x87f CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c.obj
- .debug_info    0x00030162     0x53f6 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
- .debug_info    0x00035558      0x2e0 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
- .debug_info    0x00035838      0x587 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
- .debug_info    0x00035dbf      0x5d9 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
- .debug_info    0x00036398     0x2826 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
- .debug_info    0x00038bbe     0x3a88 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
- .debug_info    0x0003c646     0x233a CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
- .debug_info    0x0003e980      0x755 CMakeFiles/foc.elf.dir/USB_Device/App/usb_device.c.obj
- .debug_info    0x0003f0d5     0x18b1 CMakeFiles/foc.elf.dir/USB_Device/App/usbd_cdc_if.c.obj
- .debug_info    0x00040986      0x602 CMakeFiles/foc.elf.dir/USB_Device/App/usbd_desc.c.obj
- .debug_info    0x00040f88     0x213f CMakeFiles/foc.elf.dir/USB_Device/Target/usbd_conf.c.obj
- .debug_info    0x000430c7     0x2b95 CMakeFiles/foc.elf.dir/bsp/bsp.c.obj
- .debug_info    0x00045c5c      0x566 CMakeFiles/foc.elf.dir/bsp/button/button.c.obj
- .debug_info    0x000461c2      0x27a CMakeFiles/foc.elf.dir/bsp/led/led.c.obj
- .debug_info    0x0004643c      0x930 CMakeFiles/foc.elf.dir/bsp/mt6701/mt6701.c.obj
- .debug_info    0x00046d6c      0x1ee CMakeFiles/foc.elf.dir/foc/digital_filter.c.obj
- .debug_info    0x00046f5a      0x301 CMakeFiles/foc.elf.dir/foc/encoder.c.obj
- .debug_info    0x0004725b      0xd03 CMakeFiles/foc.elf.dir/foc/foc.c.obj
- .debug_info    0x00047f5e     0x2f92 CMakeFiles/foc.elf.dir/foc/motor.c.obj
- .debug_info    0x0004aef0      0x400 CMakeFiles/foc.elf.dir/foc/pid.c.obj
- .debug_info    0x0004b2f0      0x449 CMakeFiles/foc.elf.dir/foc/utils.c.obj
- .debug_info    0x0004b739     0x1612 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_info    0x0004cd4b     0x1612 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_cos_f32.o)
- .debug_info    0x0004e35d     0x1a84 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_info    0x000016b5     0x27e1 CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
+ .debug_info    0x00003e96      0x641 CMakeFiles/foc.elf.dir/Core/Src/dma.c.obj
+ .debug_info    0x000044d7      0x678 CMakeFiles/foc.elf.dir/Core/Src/gpio.c.obj
+ .debug_info    0x00004b4f      0xbfa CMakeFiles/foc.elf.dir/Core/Src/main.c.obj
+ .debug_info    0x00005749      0xc70 CMakeFiles/foc.elf.dir/Core/Src/spi.c.obj
+ .debug_info    0x000063b9      0x60c CMakeFiles/foc.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj
+ .debug_info    0x000069c5      0xf0d CMakeFiles/foc.elf.dir/Core/Src/stm32g4xx_hal_timebase_tim.c.obj
+ .debug_info    0x000078d2     0x169f CMakeFiles/foc.elf.dir/Core/Src/stm32g4xx_it.c.obj
+ .debug_info    0x00008f71      0x7af CMakeFiles/foc.elf.dir/Core/Src/syscalls.c.obj
+ .debug_info    0x00009720      0x174 CMakeFiles/foc.elf.dir/Core/Src/sysmem.c.obj
+ .debug_info    0x00009894      0x5b4 CMakeFiles/foc.elf.dir/Core/Src/system_stm32g4xx.c.obj
+ .debug_info    0x00009e48     0x10f7 CMakeFiles/foc.elf.dir/Core/Src/tim.c.obj
+ .debug_info    0x0000af3f     0x12ad CMakeFiles/foc.elf.dir/Core/Src/usart.c.obj
+ .debug_info    0x0000c1ec       0x22 CMakeFiles/foc.elf.dir/Core/Startup/startup_stm32g474retx.s.obj
+ .debug_info    0x0000c20e      0xc72 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj
+ .debug_info    0x0000ce80     0x383f CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj
+ .debug_info    0x000106bf     0x30b7 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.obj
+ .debug_info    0x00013776     0x10fb CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.obj
+ .debug_info    0x00014871      0xa56 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj
+ .debug_info    0x000152c7      0x865 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.obj
+ .debug_info    0x00015b2c     0x1b5c CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd.c.obj
+ .debug_info    0x00017688      0x9e6 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd_ex.c.obj
+ .debug_info    0x0001806e      0xa07 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.obj
+ .debug_info    0x00018a75      0xefa CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.obj
+ .debug_info    0x0001996f      0xf39 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.obj
+ .debug_info    0x0001a8a8     0x22bf CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi.c.obj
+ .debug_info    0x0001cb67     0x410f CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.obj
+ .debug_info    0x00020c76     0x2538 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.obj
+ .debug_info    0x000231ae     0x6404 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj
+ .debug_info    0x000295b2     0x1281 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj
+ .debug_info    0x0002a833     0x1b07 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usb.c.obj
+ .debug_info    0x0002c33a     0x145a CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c.obj
+ .debug_info    0x0002d794      0xe47 CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c.obj
+ .debug_info    0x0002e5db     0x1324 CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c.obj
+ .debug_info    0x0002f8ff      0x87f CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c.obj
+ .debug_info    0x0003017e     0x53f6 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
+ .debug_info    0x00035574      0x2e0 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
+ .debug_info    0x00035854      0x587 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
+ .debug_info    0x00035ddb      0x5d9 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
+ .debug_info    0x000363b4     0x2826 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
+ .debug_info    0x00038bda     0x3a88 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+ .debug_info    0x0003c662     0x233a CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+ .debug_info    0x0003e99c      0x755 CMakeFiles/foc.elf.dir/USB_Device/App/usb_device.c.obj
+ .debug_info    0x0003f0f1     0x18cd CMakeFiles/foc.elf.dir/USB_Device/App/usbd_cdc_if.c.obj
+ .debug_info    0x000409be      0x602 CMakeFiles/foc.elf.dir/USB_Device/App/usbd_desc.c.obj
+ .debug_info    0x00040fc0     0x213f CMakeFiles/foc.elf.dir/USB_Device/Target/usbd_conf.c.obj
+ .debug_info    0x000430ff     0x2bb1 CMakeFiles/foc.elf.dir/bsp/bsp.c.obj
+ .debug_info    0x00045cb0      0x566 CMakeFiles/foc.elf.dir/bsp/button/button.c.obj
+ .debug_info    0x00046216      0x27a CMakeFiles/foc.elf.dir/bsp/led/led.c.obj
+ .debug_info    0x00046490      0x930 CMakeFiles/foc.elf.dir/bsp/mt6701/mt6701.c.obj
+ .debug_info    0x00046dc0      0x1ee CMakeFiles/foc.elf.dir/foc/digital_filter.c.obj
+ .debug_info    0x00046fae      0x301 CMakeFiles/foc.elf.dir/foc/encoder.c.obj
+ .debug_info    0x000472af      0xd03 CMakeFiles/foc.elf.dir/foc/foc.c.obj
+ .debug_info    0x00047fb2     0x3075 CMakeFiles/foc.elf.dir/foc/motor.c.obj
+ .debug_info    0x0004b027      0x400 CMakeFiles/foc.elf.dir/foc/pid.c.obj
+ .debug_info    0x0004b427      0x449 CMakeFiles/foc.elf.dir/foc/utils.c.obj
+ .debug_info    0x0004b870     0x1612 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_info    0x0004ce82     0x1612 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_info    0x0004e494     0x1a84 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_common_tables.o)
 
 .debug_abbrev   0x00000000     0x8a83
  .debug_abbrev  0x00000000      0x22e CMakeFiles/foc.elf.dir/Core/Src/adc.c.obj
@@ -5612,7 +5616,7 @@ LOAD d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/
  .debug_aranges
                 0x00002898       0x18 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_common_tables.o)
 
-.debug_ranges   0x00000000     0x2e08
+.debug_ranges   0x00000000     0x2e20
  .debug_ranges  0x00000000       0x28 CMakeFiles/foc.elf.dir/Core/Src/adc.c.obj
  .debug_ranges  0x00000028       0x78 CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
  .debug_ranges  0x000000a0       0x10 CMakeFiles/foc.elf.dir/Core/Src/dma.c.obj
@@ -5667,13 +5671,13 @@ LOAD d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/
  .debug_ranges  0x00002b58       0x18 CMakeFiles/foc.elf.dir/foc/digital_filter.c.obj
  .debug_ranges  0x00002b70       0x20 CMakeFiles/foc.elf.dir/foc/encoder.c.obj
  .debug_ranges  0x00002b90       0x50 CMakeFiles/foc.elf.dir/foc/foc.c.obj
- .debug_ranges  0x00002be0      0x180 CMakeFiles/foc.elf.dir/foc/motor.c.obj
- .debug_ranges  0x00002d60       0x30 CMakeFiles/foc.elf.dir/foc/pid.c.obj
- .debug_ranges  0x00002d90       0x58 CMakeFiles/foc.elf.dir/foc/utils.c.obj
- .debug_ranges  0x00002de8       0x10 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_ranges  0x00002df8       0x10 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_ranges  0x00002be0      0x198 CMakeFiles/foc.elf.dir/foc/motor.c.obj
+ .debug_ranges  0x00002d78       0x30 CMakeFiles/foc.elf.dir/foc/pid.c.obj
+ .debug_ranges  0x00002da8       0x58 CMakeFiles/foc.elf.dir/foc/utils.c.obj
+ .debug_ranges  0x00002e00       0x10 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_ranges  0x00002e10       0x10 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_cos_f32.o)
 
-.debug_line     0x00000000    0x3383d
+.debug_line     0x00000000    0x3391f
  .debug_line    0x00000000      0x7b8 CMakeFiles/foc.elf.dir/Core/Src/adc.c.obj
  .debug_line    0x000007b8      0xb9f CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
  .debug_line    0x00001357      0x1c7 CMakeFiles/foc.elf.dir/Core/Src/dma.c.obj
@@ -5728,133 +5732,133 @@ LOAD d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/
  .debug_line    0x000308be      0x125 CMakeFiles/foc.elf.dir/foc/digital_filter.c.obj
  .debug_line    0x000309e3      0x1d0 CMakeFiles/foc.elf.dir/foc/encoder.c.obj
  .debug_line    0x00030bb3      0x8a4 CMakeFiles/foc.elf.dir/foc/foc.c.obj
- .debug_line    0x00031457     0x1403 CMakeFiles/foc.elf.dir/foc/motor.c.obj
- .debug_line    0x0003285a      0x352 CMakeFiles/foc.elf.dir/foc/pid.c.obj
- .debug_line    0x00032bac      0x4ab CMakeFiles/foc.elf.dir/foc/utils.c.obj
- .debug_line    0x00033057      0x2d0 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_line    0x00033327      0x2d3 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_cos_f32.o)
- .debug_line    0x000335fa      0x243 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_line    0x00031457     0x14e5 CMakeFiles/foc.elf.dir/foc/motor.c.obj
+ .debug_line    0x0003293c      0x352 CMakeFiles/foc.elf.dir/foc/pid.c.obj
+ .debug_line    0x00032c8e      0x4ab CMakeFiles/foc.elf.dir/foc/utils.c.obj
+ .debug_line    0x00033139      0x2d0 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_line    0x00033409      0x2d3 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_line    0x000336dc      0x243 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_common_tables.o)
 
-.debug_str      0x00000000     0xe6da
+.debug_str      0x00000000     0xe72a
  .debug_str     0x00000000     0x1391 CMakeFiles/foc.elf.dir/Core/Src/adc.c.obj
                                0x14cc (size before relaxing)
- .debug_str     0x00001391     0x1182 CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
-                               0x1a70 (size before relaxing)
- .debug_str     0x00002513       0x41 CMakeFiles/foc.elf.dir/Core/Src/dma.c.obj
+ .debug_str     0x00001391     0x11b1 CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
+                               0x1a9f (size before relaxing)
+ .debug_str     0x00002542       0x41 CMakeFiles/foc.elf.dir/Core/Src/dma.c.obj
                                 0x9a0 (size before relaxing)
- .debug_str     0x00002554       0x43 CMakeFiles/foc.elf.dir/Core/Src/gpio.c.obj
+ .debug_str     0x00002583       0x43 CMakeFiles/foc.elf.dir/Core/Src/gpio.c.obj
                                 0x40f (size before relaxing)
- .debug_str     0x00002597      0x557 CMakeFiles/foc.elf.dir/Core/Src/main.c.obj
+ .debug_str     0x000025c6      0x557 CMakeFiles/foc.elf.dir/Core/Src/main.c.obj
                                 0xad2 (size before relaxing)
- .debug_str     0x00002aee      0x1f8 CMakeFiles/foc.elf.dir/Core/Src/spi.c.obj
+ .debug_str     0x00002b1d      0x1f8 CMakeFiles/foc.elf.dir/Core/Src/spi.c.obj
                                 0x954 (size before relaxing)
- .debug_str     0x00002ce6       0x70 CMakeFiles/foc.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj
+ .debug_str     0x00002d15       0x70 CMakeFiles/foc.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj
                                 0x9bc (size before relaxing)
- .debug_str     0x00002d56      0x12d CMakeFiles/foc.elf.dir/Core/Src/stm32g4xx_hal_timebase_tim.c.obj
+ .debug_str     0x00002d85      0x12d CMakeFiles/foc.elf.dir/Core/Src/stm32g4xx_hal_timebase_tim.c.obj
                                0x1113 (size before relaxing)
- .debug_str     0x00002e83      0x482 CMakeFiles/foc.elf.dir/Core/Src/stm32g4xx_it.c.obj
+ .debug_str     0x00002eb2      0x482 CMakeFiles/foc.elf.dir/Core/Src/stm32g4xx_it.c.obj
                                0x11dc (size before relaxing)
- .debug_str     0x00003305      0x21c CMakeFiles/foc.elf.dir/Core/Src/syscalls.c.obj
+ .debug_str     0x00003334      0x21c CMakeFiles/foc.elf.dir/Core/Src/syscalls.c.obj
                                 0x446 (size before relaxing)
- .debug_str     0x00003521       0x98 CMakeFiles/foc.elf.dir/Core/Src/sysmem.c.obj
+ .debug_str     0x00003550       0x98 CMakeFiles/foc.elf.dir/Core/Src/sysmem.c.obj
                                 0x272 (size before relaxing)
- .debug_str     0x000035b9       0xfe CMakeFiles/foc.elf.dir/Core/Src/system_stm32g4xx.c.obj
+ .debug_str     0x000035e8       0xfe CMakeFiles/foc.elf.dir/Core/Src/system_stm32g4xx.c.obj
                                 0x418 (size before relaxing)
- .debug_str     0x000036b7      0x2fa CMakeFiles/foc.elf.dir/Core/Src/tim.c.obj
+ .debug_str     0x000036e6      0x2fa CMakeFiles/foc.elf.dir/Core/Src/tim.c.obj
                                 0xd38 (size before relaxing)
- .debug_str     0x000039b1      0x10d CMakeFiles/foc.elf.dir/Core/Src/usart.c.obj
+ .debug_str     0x000039e0      0x10d CMakeFiles/foc.elf.dir/Core/Src/usart.c.obj
                                0x12ce (size before relaxing)
- .debug_str     0x00003abe       0x59 CMakeFiles/foc.elf.dir/Core/Startup/startup_stm32g474retx.s.obj
+ .debug_str     0x00003aed       0x59 CMakeFiles/foc.elf.dir/Core/Startup/startup_stm32g474retx.s.obj
                                  0x91 (size before relaxing)
- .debug_str     0x00003b17      0x44f CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj
+ .debug_str     0x00003b46      0x44f CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj
                                 0xe86 (size before relaxing)
- .debug_str     0x00003f66      0x9d9 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj
+ .debug_str     0x00003f95      0x9d9 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj
                                0x133a (size before relaxing)
- .debug_str     0x0000493f      0x453 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.obj
+ .debug_str     0x0000496e      0x453 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.obj
                                0x1311 (size before relaxing)
- .debug_str     0x00004d92      0x43b CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.obj
+ .debug_str     0x00004dc1      0x43b CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.obj
                                 0xdae (size before relaxing)
- .debug_str     0x000051cd      0x2a3 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj
+ .debug_str     0x000051fc      0x2a3 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj
                                 0x7f2 (size before relaxing)
- .debug_str     0x00005470      0x139 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.obj
+ .debug_str     0x0000549f      0x139 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.obj
                                 0x591 (size before relaxing)
- .debug_str     0x000055a9      0x575 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd.c.obj
+ .debug_str     0x000055d8      0x575 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd.c.obj
                                 0xb33 (size before relaxing)
- .debug_str     0x00005b1e      0x1bc CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd_ex.c.obj
+ .debug_str     0x00005b4d      0x1bc CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd_ex.c.obj
                                 0x7d0 (size before relaxing)
- .debug_str     0x00005cda      0x4fe CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.obj
+ .debug_str     0x00005d09      0x4fe CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.obj
                                 0x833 (size before relaxing)
- .debug_str     0x000061d8      0x24d CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.obj
+ .debug_str     0x00006207      0x24d CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.obj
                                 0x8a6 (size before relaxing)
- .debug_str     0x00006425      0x398 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.obj
+ .debug_str     0x00006454      0x398 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.obj
                                 0xab6 (size before relaxing)
- .debug_str     0x000067bd      0x586 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi.c.obj
+ .debug_str     0x000067ec      0x586 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi.c.obj
                                 0xd37 (size before relaxing)
- .debug_str     0x00006d43      0xe5a CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.obj
+ .debug_str     0x00006d72      0xe5a CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.obj
                                0x18c0 (size before relaxing)
- .debug_str     0x00007b9d      0x833 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.obj
+ .debug_str     0x00007bcc      0x833 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.obj
                                0x1518 (size before relaxing)
- .debug_str     0x000083d0      0x825 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj
+ .debug_str     0x000083ff      0x825 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj
                                0x127b (size before relaxing)
- .debug_str     0x00008bf5      0x248 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj
+ .debug_str     0x00008c24      0x248 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj
                                 0xba4 (size before relaxing)
- .debug_str     0x00008e3d       0xf6 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usb.c.obj
+ .debug_str     0x00008e6c       0xf6 CMakeFiles/foc.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usb.c.obj
                                 0x6d1 (size before relaxing)
- .debug_str     0x00008f33      0x6b0 CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c.obj
+ .debug_str     0x00008f62      0x6b0 CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c.obj
                                 0xcf7 (size before relaxing)
- .debug_str     0x000095e3      0x2b7 CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c.obj
+ .debug_str     0x00009612      0x2b7 CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c.obj
                                 0x8cb (size before relaxing)
- .debug_str     0x0000989a      0x16a CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c.obj
+ .debug_str     0x000098c9      0x16a CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c.obj
                                 0x81d (size before relaxing)
- .debug_str     0x00009a04       0x74 CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c.obj
+ .debug_str     0x00009a33       0x74 CMakeFiles/foc.elf.dir/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c.obj
                                 0x712 (size before relaxing)
- .debug_str     0x00009a78     0x17b4 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
+ .debug_str     0x00009aa7     0x17b4 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
                                0x26a2 (size before relaxing)
- .debug_str     0x0000b22c      0x15c CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
+ .debug_str     0x0000b25b      0x15c CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
                                 0x34f (size before relaxing)
- .debug_str     0x0000b388      0x250 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
+ .debug_str     0x0000b3b7      0x250 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
                                 0x4cf (size before relaxing)
- .debug_str     0x0000b5d8      0x2ee CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
+ .debug_str     0x0000b607      0x2ee CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
                                 0x55d (size before relaxing)
- .debug_str     0x0000b8c6      0x63c CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
+ .debug_str     0x0000b8f5      0x63c CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
                                 0xd65 (size before relaxing)
- .debug_str     0x0000bf02      0x925 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+ .debug_str     0x0000bf31      0x925 CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
                                0x1734 (size before relaxing)
- .debug_str     0x0000c827      0x50e CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+ .debug_str     0x0000c856      0x50e CMakeFiles/foc.elf.dir/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
                                0x105b (size before relaxing)
- .debug_str     0x0000cd35       0x6f CMakeFiles/foc.elf.dir/USB_Device/App/usb_device.c.obj
+ .debug_str     0x0000cd64       0x6f CMakeFiles/foc.elf.dir/USB_Device/App/usb_device.c.obj
                                 0x6ee (size before relaxing)
- .debug_str     0x0000cda4      0x106 CMakeFiles/foc.elf.dir/USB_Device/App/usbd_cdc_if.c.obj
-                                0xf8d (size before relaxing)
- .debug_str     0x0000ceaa      0x19b CMakeFiles/foc.elf.dir/USB_Device/App/usbd_desc.c.obj
+ .debug_str     0x0000cdd3      0x106 CMakeFiles/foc.elf.dir/USB_Device/App/usbd_cdc_if.c.obj
+                                0xfbc (size before relaxing)
+ .debug_str     0x0000ced9      0x19b CMakeFiles/foc.elf.dir/USB_Device/App/usbd_desc.c.obj
                                 0x4c5 (size before relaxing)
- .debug_str     0x0000d045       0xa4 CMakeFiles/foc.elf.dir/USB_Device/Target/usbd_conf.c.obj
+ .debug_str     0x0000d074       0xa4 CMakeFiles/foc.elf.dir/USB_Device/Target/usbd_conf.c.obj
                                0x18bd (size before relaxing)
- .debug_str     0x0000d0e9      0x326 CMakeFiles/foc.elf.dir/bsp/bsp.c.obj
-                               0x1a5b (size before relaxing)
- .debug_str     0x0000d40f      0x14b CMakeFiles/foc.elf.dir/bsp/button/button.c.obj
+ .debug_str     0x0000d118      0x326 CMakeFiles/foc.elf.dir/bsp/bsp.c.obj
+                               0x1a8a (size before relaxing)
+ .debug_str     0x0000d43e      0x14b CMakeFiles/foc.elf.dir/bsp/button/button.c.obj
                                 0x4c1 (size before relaxing)
- .debug_str     0x0000d55a       0x6c CMakeFiles/foc.elf.dir/bsp/led/led.c.obj
+ .debug_str     0x0000d589       0x6c CMakeFiles/foc.elf.dir/bsp/led/led.c.obj
                                 0x26d (size before relaxing)
- .debug_str     0x0000d5c6       0xa4 CMakeFiles/foc.elf.dir/bsp/mt6701/mt6701.c.obj
+ .debug_str     0x0000d5f5       0xa4 CMakeFiles/foc.elf.dir/bsp/mt6701/mt6701.c.obj
                                 0x7f8 (size before relaxing)
- .debug_str     0x0000d66a       0x66 CMakeFiles/foc.elf.dir/foc/digital_filter.c.obj
+ .debug_str     0x0000d699       0x66 CMakeFiles/foc.elf.dir/foc/digital_filter.c.obj
                                 0x25d (size before relaxing)
- .debug_str     0x0000d6d0       0xd2 CMakeFiles/foc.elf.dir/foc/encoder.c.obj
+ .debug_str     0x0000d6ff       0xd2 CMakeFiles/foc.elf.dir/foc/encoder.c.obj
                                 0x349 (size before relaxing)
- .debug_str     0x0000d7a2      0x171 CMakeFiles/foc.elf.dir/foc/foc.c.obj
+ .debug_str     0x0000d7d1      0x171 CMakeFiles/foc.elf.dir/foc/foc.c.obj
                                 0x469 (size before relaxing)
- .debug_str     0x0000d913      0x3c3 CMakeFiles/foc.elf.dir/foc/motor.c.obj
-                               0x13eb (size before relaxing)
- .debug_str     0x0000dcd6       0x4b CMakeFiles/foc.elf.dir/foc/pid.c.obj
+ .debug_str     0x0000d942      0x3e4 CMakeFiles/foc.elf.dir/foc/motor.c.obj
+                               0x143b (size before relaxing)
+ .debug_str     0x0000dd26       0x4b CMakeFiles/foc.elf.dir/foc/pid.c.obj
                                 0x2e0 (size before relaxing)
- .debug_str     0x0000dd21       0xd4 CMakeFiles/foc.elf.dir/foc/utils.c.obj
+ .debug_str     0x0000dd71       0xd4 CMakeFiles/foc.elf.dir/foc/utils.c.obj
                                 0x337 (size before relaxing)
- .debug_str     0x0000ddf5      0x883 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_str     0x0000de45      0x883 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_sin_f32.o)
                                 0xd42 (size before relaxing)
- .debug_str     0x0000e678       0x34 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_str     0x0000e6c8       0x34 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_cos_f32.o)
                                 0xd42 (size before relaxing)
- .debug_str     0x0000e6ac       0x2e C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_str     0x0000e6fc       0x2e C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_common_tables.o)
                                 0xd1d (size before relaxing)
 
 .comment        0x00000000       0xbe
@@ -5920,7 +5924,7 @@ LOAD d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/
  .comment       0x000000be       0x76 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_cos_f32.o)
  .comment       0x000000be       0x76 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_common_tables.o)
 
-.debug_frame    0x00000000     0x86e8
+.debug_frame    0x00000000     0x86ec
  .debug_frame   0x00000000       0x90 CMakeFiles/foc.elf.dir/Core/Src/adc.c.obj
  .debug_frame   0x00000090       0xd8 CMakeFiles/foc.elf.dir/Core/Src/app_freertos.c.obj
  .debug_frame   0x00000168       0x2c CMakeFiles/foc.elf.dir/Core/Src/dma.c.obj
@@ -5974,73 +5978,73 @@ LOAD d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/
  .debug_frame   0x00006668       0x48 CMakeFiles/foc.elf.dir/foc/digital_filter.c.obj
  .debug_frame   0x000066b0       0x68 CMakeFiles/foc.elf.dir/foc/encoder.c.obj
  .debug_frame   0x00006718      0x158 CMakeFiles/foc.elf.dir/foc/foc.c.obj
- .debug_frame   0x00006870      0x4ec CMakeFiles/foc.elf.dir/foc/motor.c.obj
- .debug_frame   0x00006d5c       0x80 CMakeFiles/foc.elf.dir/foc/pid.c.obj
- .debug_frame   0x00006ddc       0xac CMakeFiles/foc.elf.dir/foc/utils.c.obj
- .debug_frame   0x00006e88       0x20 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_frame   0x00006ea8       0x20 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_cos_f32.o)
- .debug_frame   0x00006ec8       0xac d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
- .debug_frame   0x00006f74       0x50 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
- .debug_frame   0x00006fc4       0xc4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_cmpdf2.o)
- .debug_frame   0x00007088       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
- .debug_frame   0x000070ac       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x000070d8       0x34 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
- .debug_frame   0x0000710c       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_fixunsdfsi.o)
- .debug_frame   0x00007130       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-atof.o)
- .debug_frame   0x00007150       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-errno.o)
- .debug_frame   0x00007170       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-init.o)
- .debug_frame   0x0000719c       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-memset.o)
- .debug_frame   0x000071c8       0x64 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-reent.o)
- .debug_frame   0x0000722c       0x9c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strstr.o)
- .debug_frame   0x000072c8      0x12c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
- .debug_frame   0x000073f4       0x68 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-__call_atexit.o)
- .debug_frame   0x0000745c       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-atexit.o)
- .debug_frame   0x0000747c       0x34 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fini.o)
- .debug_frame   0x000074b0       0x8c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-freer.o)
- .debug_frame   0x0000753c       0x8c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-gethex.o)
- .debug_frame   0x000075c8       0x6c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-hexnan.o)
- .debug_frame   0x00007634       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lnumeric.o)
- .debug_frame   0x00007654       0x68 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-locale.o)
- .debug_frame   0x000076bc       0xb0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
- .debug_frame   0x0000776c       0x4c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mallocr.o)
- .debug_frame   0x000077b8       0x4c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mbtowc_r.o)
- .debug_frame   0x00007804       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-memcmp.o)
- .debug_frame   0x00007830       0x30 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mlock.o)
- .debug_frame   0x00007860      0x280 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
- .debug_frame   0x00007ae0       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-s_nan.o)
- .debug_frame   0x00007b00       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-sbrkr.o)
- .debug_frame   0x00007b2c       0x34 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strchr.o)
- .debug_frame   0x00007b60       0x38 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strncmp.o)
- .debug_frame   0x00007b98       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strnlen.o)
- .debug_frame   0x00007bb8       0x3c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wctomb_r.o)
- .debug_frame   0x00007bf4       0x34 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-__atexit.o)
- .debug_frame   0x00007c28       0x40 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-assert.o)
- .debug_frame   0x00007c68       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-callocr.o)
- .debug_frame   0x00007c94       0x70 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fiprintf.o)
- .debug_frame   0x00007d04       0xf4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
- .debug_frame   0x00007df8       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wsetup.o)
- .debug_frame   0x00007e24       0x28 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-abort.o)
- .debug_frame   0x00007e4c       0x70 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fflush.o)
- .debug_frame   0x00007ebc      0x154 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-findfp.o)
- .debug_frame   0x00008010       0x8c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fputwc.o)
- .debug_frame   0x0000809c       0x64 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fvwrite.o)
- .debug_frame   0x00008100       0x54 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fwalk.o)
- .debug_frame   0x00008154       0x40 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-localeconv.o)
- .debug_frame   0x00008194       0x70 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-makebuf.o)
- .debug_frame   0x00008204       0x40 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-memmove.o)
- .debug_frame   0x00008244       0x48 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-reallocr.o)
- .debug_frame   0x0000828c      0x114 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-signal.o)
- .debug_frame   0x000083a0       0x3c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-signalr.o)
- .debug_frame   0x000083dc       0x8c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-stdio.o)
- .debug_frame   0x00008468       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strncpy.o)
- .debug_frame   0x00008494       0x4c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wbuf.o)
- .debug_frame   0x000084e0       0x60 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wcrtomb.o)
- .debug_frame   0x00008540       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-writer.o)
- .debug_frame   0x0000856c       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-closer.o)
- .debug_frame   0x00008598       0x3c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fclose.o)
- .debug_frame   0x000085d4       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fstatr.o)
- .debug_frame   0x00008600       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-isattyr.o)
- .debug_frame   0x0000862c       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lseekr.o)
- .debug_frame   0x00008658       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-readr.o)
- .debug_frame   0x00008684       0x38 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_fixdfdi.o)
- .debug_frame   0x000086bc       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_fixunsdfdi.o)
+ .debug_frame   0x00006870      0x4f0 CMakeFiles/foc.elf.dir/foc/motor.c.obj
+ .debug_frame   0x00006d60       0x80 CMakeFiles/foc.elf.dir/foc/pid.c.obj
+ .debug_frame   0x00006de0       0xac CMakeFiles/foc.elf.dir/foc/utils.c.obj
+ .debug_frame   0x00006e8c       0x20 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_frame   0x00006eac       0x20 C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_frame   0x00006ecc       0xac d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
+ .debug_frame   0x00006f78       0x50 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
+ .debug_frame   0x00006fc8       0xc4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_cmpdf2.o)
+ .debug_frame   0x0000708c       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
+ .debug_frame   0x000070b0       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x000070dc       0x34 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x00007110       0x24 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_fixunsdfsi.o)
+ .debug_frame   0x00007134       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-atof.o)
+ .debug_frame   0x00007154       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-errno.o)
+ .debug_frame   0x00007174       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-init.o)
+ .debug_frame   0x000071a0       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-memset.o)
+ .debug_frame   0x000071cc       0x64 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-reent.o)
+ .debug_frame   0x00007230       0x9c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strstr.o)
+ .debug_frame   0x000072cc      0x12c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strtod.o)
+ .debug_frame   0x000073f8       0x68 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-__call_atexit.o)
+ .debug_frame   0x00007460       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-atexit.o)
+ .debug_frame   0x00007480       0x34 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fini.o)
+ .debug_frame   0x000074b4       0x8c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-freer.o)
+ .debug_frame   0x00007540       0x8c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-gethex.o)
+ .debug_frame   0x000075cc       0x6c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-gdtoa-hexnan.o)
+ .debug_frame   0x00007638       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lnumeric.o)
+ .debug_frame   0x00007658       0x68 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-locale.o)
+ .debug_frame   0x000076c0       0xb0 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lock.o)
+ .debug_frame   0x00007770       0x4c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mallocr.o)
+ .debug_frame   0x000077bc       0x4c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mbtowc_r.o)
+ .debug_frame   0x00007808       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-memcmp.o)
+ .debug_frame   0x00007834       0x30 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mlock.o)
+ .debug_frame   0x00007864      0x280 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-mprec.o)
+ .debug_frame   0x00007ae4       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-s_nan.o)
+ .debug_frame   0x00007b04       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-sbrkr.o)
+ .debug_frame   0x00007b30       0x34 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strchr.o)
+ .debug_frame   0x00007b64       0x38 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strncmp.o)
+ .debug_frame   0x00007b9c       0x20 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strnlen.o)
+ .debug_frame   0x00007bbc       0x3c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wctomb_r.o)
+ .debug_frame   0x00007bf8       0x34 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-__atexit.o)
+ .debug_frame   0x00007c2c       0x40 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-assert.o)
+ .debug_frame   0x00007c6c       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-callocr.o)
+ .debug_frame   0x00007c98       0x70 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fiprintf.o)
+ .debug_frame   0x00007d08       0xf4 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-vfiprintf.o)
+ .debug_frame   0x00007dfc       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wsetup.o)
+ .debug_frame   0x00007e28       0x28 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-abort.o)
+ .debug_frame   0x00007e50       0x70 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fflush.o)
+ .debug_frame   0x00007ec0      0x154 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-findfp.o)
+ .debug_frame   0x00008014       0x8c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fputwc.o)
+ .debug_frame   0x000080a0       0x64 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fvwrite.o)
+ .debug_frame   0x00008104       0x54 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fwalk.o)
+ .debug_frame   0x00008158       0x40 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-localeconv.o)
+ .debug_frame   0x00008198       0x70 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-makebuf.o)
+ .debug_frame   0x00008208       0x40 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-memmove.o)
+ .debug_frame   0x00008248       0x48 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-reallocr.o)
+ .debug_frame   0x00008290      0x114 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-signal.o)
+ .debug_frame   0x000083a4       0x3c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-signalr.o)
+ .debug_frame   0x000083e0       0x8c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-stdio.o)
+ .debug_frame   0x0000846c       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-strncpy.o)
+ .debug_frame   0x00008498       0x4c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wbuf.o)
+ .debug_frame   0x000084e4       0x60 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-wcrtomb.o)
+ .debug_frame   0x00008544       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-writer.o)
+ .debug_frame   0x00008570       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-closer.o)
+ .debug_frame   0x0000859c       0x3c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fclose.o)
+ .debug_frame   0x000085d8       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-fstatr.o)
+ .debug_frame   0x00008604       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-isattyr.o)
+ .debug_frame   0x00008630       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-lseekr.o)
+ .debug_frame   0x0000865c       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg.a(lib_a-readr.o)
+ .debug_frame   0x00008688       0x38 d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_fixdfdi.o)
+ .debug_frame   0x000086c0       0x2c d:/gnuarm~1/102021~1.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_fixunsdfdi.o)

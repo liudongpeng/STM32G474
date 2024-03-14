@@ -1,3 +1,0 @@
-C:/Users/LiuDongPeng/Desktop/g474/foc/cmake-build-debug/CMakeFiles/foc.elf.dir
-C:/Users/LiuDongPeng/Desktop/g474/foc/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/LiuDongPeng/Desktop/g474/foc/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -103,14 +103,15 @@ typedef struct motor
     foc_pll_t speedPll;
 
     /* HFI */
-    float hfiVoltAmpl;
+    int hfiIdOffsetSampleCnt; // 磁极辨识中idh采样点数
+    bool isHfiNsiOvered; // 磁极辨识是否结束
+    float hfiVoltAmpl, hfiCurrAmpl;
     float hfiTheta, hfiThetaDiff, hfiSpeedRpm, hfiThetaEst, hfiSpeedEst;
-    float hfiUd;
+    float hfiUdOffset;
     float hfiId, hfiIq;
     float hfiIalpha, hfiIbeta, hfiIalphaLast, hfiIbetaLast;
     float hfiIalphaDiff, hfiIbetaDiff, hfiIalphaEnvelope, hfiIbetaEnvelope;
     hfi_pll_t hfiPll;
-    pid_ctrl_t hfiPid;
     lpf_t hfiSpeedEstLpf;
 
     /* motor param */
