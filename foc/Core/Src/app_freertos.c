@@ -272,7 +272,7 @@ void StartDefaultTask(void *argument)
 
         /* Led blink. */
         static int ledCnt = 0;
-        if (++ledCnt > 50)
+        if (++ledCnt > 500)
         {
             ledCnt = 0;
             led_toggle(&led1);
