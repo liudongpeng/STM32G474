@@ -821,7 +821,6 @@ void motor_set_position(motor_t *motor, float angle)
 }
 
 
-
 /**
  *
  * @param motor
@@ -829,7 +828,7 @@ void motor_set_position(motor_t *motor, float angle)
  * @param dir
  * @return
  */
-int motor_round_to_angle(motor_t *motor, float n, int dir, float* targetAngle)
+int motor_round_to_angle(motor_t *motor, float n, int dir, float *targetAngle)
 {
     int ret = 0;
 
@@ -1262,6 +1261,49 @@ int motor_status_loop(motor_t *motor)
         default:
             break;
     }
+
+    return ret;
+}
+
+
+/**
+ *
+ * @param motor
+ * @return
+ */
+int motor_smo_calc_emf(motor_t *motor)
+{
+    int ret = 0;
+
+    if (motor == NULL)
+        return -1;
+
+    /* 观测电流 */
+    motor->smoIalphaEst += (-(motor->Rs / motor->Ls) * motor->smoIalphaEst +
+                            (1.0f / motor->Ls) * (motor->ualpha - motor->smoEalpha));
+    motor->smoIbetaEst += (-(motor->Rs / motor->Ls) * motor->smoIbetaEst +
+                           (1.0f / motor->Ls) * (motor->ubeta - motor->smoEbeta));
+
+    float ialphaErr = motor->smoIalphaEst - motor->ialpha;
+    float ibetaErr = motor->smoIbetaEst - motor->ibeta;
+
+    /* 反电动势 */
+    motor->smoEalpha = (float)sign(ialphaErr) * motor->smoGain;
+    motor->smoEbeta = (float)sign(ibetaErr) * motor->smoGain;
+
+
+    return ret;
+}
+
+/**
+ *
+ * @param motor
+ * @return
+ */
+int motor_smo_pll(motor_t *motor)
+{
+    int ret = 0;
+
 
     return ret;
 }

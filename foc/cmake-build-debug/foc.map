@@ -2106,6 +2106,14 @@ Discarded input sections
  .text.position_pid_ctrl
                 0x00000000       0xa4 CMakeFiles/foc.elf.dir/foc/pid.c.obj
  .text.pi_ctrl  0x00000000       0x84 CMakeFiles/foc.elf.dir/foc/pid.c.obj
+ .text          0x00000000        0x0 CMakeFiles/foc.elf.dir/foc/smo.c.obj
+ .data          0x00000000        0x0 CMakeFiles/foc.elf.dir/foc/smo.c.obj
+ .bss           0x00000000        0x0 CMakeFiles/foc.elf.dir/foc/smo.c.obj
+ .debug_line    0x00000000        0x0 CMakeFiles/foc.elf.dir/foc/smo.c.obj
+ .debug_str     0x00000000      0x142 CMakeFiles/foc.elf.dir/foc/smo.c.obj
+ .comment       0x00000000       0x4a CMakeFiles/foc.elf.dir/foc/smo.c.obj
+ .ARM.attributes
+                0x00000000       0x34 CMakeFiles/foc.elf.dir/foc/smo.c.obj
  .text          0x00000000        0x0 CMakeFiles/foc.elf.dir/foc/utils.c.obj
  .data          0x00000000        0x0 CMakeFiles/foc.elf.dir/foc/utils.c.obj
  .bss           0x00000000        0x0 CMakeFiles/foc.elf.dir/foc/utils.c.obj
@@ -2842,6 +2850,7 @@ LOAD CMakeFiles/foc.elf.dir/foc/foc.c.obj
 LOAD CMakeFiles/foc.elf.dir/foc/hfi.c.obj
 LOAD CMakeFiles/foc.elf.dir/foc/motor.c.obj
 LOAD CMakeFiles/foc.elf.dir/foc/pid.c.obj
+LOAD CMakeFiles/foc.elf.dir/foc/smo.c.obj
 LOAD CMakeFiles/foc.elf.dir/foc/utils.c.obj
 LOAD C:/Users/LiuDongPeng/Desktop/g474/foc/Middlewares/ST/ARM/DSP/Lib/libarm_cortexM4lf_math.a
 START GROUP

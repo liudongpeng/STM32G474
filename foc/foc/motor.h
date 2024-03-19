@@ -57,8 +57,8 @@ typedef struct motor
     float VBus, IBus;
     float ua, ub, uc;
     float ia, ib, ic;
-    float ialpha, ibeta, ialphaLast, ibetaLast;
-    float id, iq, idLast, iqLast;
+    float ialpha, ibeta;
+    float id, iq;
     float ud, uq;
     float ualpha, ubeta;
 
@@ -103,6 +103,8 @@ typedef struct motor
     foc_pll_t speedPll;
 
     /* HFI */
+    float ialphaLast, ibetaLast;
+    float idLast, iqLast;
     int hfiIdOffsetSampleCnt; // 磁极辨识中idh采样点数
     bool isHfiNsiOvered; // 磁极辨识是否结束
     float hfiVoltAmpl, hfiCurrAmpl;
@@ -114,9 +116,17 @@ typedef struct motor
     hfi_pll_t hfiPll;
     lpf_t hfiSpeedEstLpf;
 
+
+    /* SMO */
+    float smoGain;
+    float smoIalphaEst, smoIbetaEst, smoIalphabetaGain;
+    float smoEalpha, smoEbeta;
+    float smoTheta, smoThetaEst;
+    lpf_t smoLpfAlpha, smoLpfBeta;
+
     /* motor param */
     int polePairs;
-    float Rs, Ld, Lq;
+    float Rs, Ls, Ld, Lq;
 
     motor_status_t status;
 
@@ -184,6 +194,9 @@ int motor_meas_phase_resistance2(motor_t *motor);
 
 
 int motor_hfi_pi_calc(motor_t* motor, float thetaErr);
+
+int motor_smo_calc_emf(motor_t* motor);
+int motor_smo_pll(motor_t* motor);
 
 
 #endif //FOC_MOTOR_H

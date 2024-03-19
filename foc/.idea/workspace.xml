@@ -173,6 +173,11 @@
   }
 }</component>
   <component name="RunManager" selected="OpenOCD Download &amp; Run.foc.elf">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="foc.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="foc" TARGET_NAME="foc.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="foc" RUN_TARGET_NAME="foc.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -289,6 +294,7 @@
       <workItem from="1710687708580" duration="53000" />
       <workItem from="1710688478277" duration="347000" />
       <workItem from="1710765259970" duration="1796000" />
+      <workItem from="1710850973803" duration="4510000" />
     </task>
     <servers />
   </component>
