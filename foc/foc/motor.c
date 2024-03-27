@@ -22,8 +22,8 @@ int motor_create(motor_t *motor)
     motor->timArr = FOC_TIM1_ARR;
     motor->encoderCpr = 16384;
 
-
     /* 三环控制频率 */
+    motor->pwmCycle = 1.0f / 20000.0f;
     motor->currentLoopFreq = 20000;
     motor->speedLoopFreq = 5000;
     motor->positionLoopFreq = 1000;
@@ -32,9 +32,14 @@ int motor_create(motor_t *motor)
     motor->hfiIdOffsetSampleCnt = 20;
     motor->hfiVoltAmpl = 12.0f * 0.1f;
     motor->hfiCurrAmpl = 0.3f;
-    motor->sensorless = true;
+    motor->sensorless = !true;
     pid_ctrl_init(&motor->hfiPll.pid, 3000.0f, 47000.0f, 0, 0, -2000.0f, 2000.0f);
     lpf_init(&motor->hfiSpeedEstLpf, 200.0f, 1.0f / 20000.0f);
+
+    /* SMO 参数 */
+    motor->smoGain = 200.0f;
+    lpf_init(&motor->smoLpfEalpha, 100.0f, motor->pwmCycle);
+    lpf_init(&motor->smoLpfEbeta, 100.0f, motor->pwmCycle);
 
 //    motor_set_id_ref(motor, 0.3f);
     motor_set_speed(motor, 300.0f);
@@ -51,10 +56,11 @@ int motor_create(motor_t *motor)
     if (true)
     {
         motor->encoderDir = -1;
-        motor->angleRadOffset = 2.073303f;
+        motor->angleRadOffset = 0.276244f;
         motor->polePairs = 7;
         motor->Rs = 105.5f / 1000.0f;
         motor->Ld = 33.21f / 1e6f;
+        motor->Ls = 33.21f / 1e6f;
     }
 
     // 2312S航模电机
@@ -66,6 +72,7 @@ int motor_create(motor_t *motor)
         motor->Rs = 0.11247408f;
         motor->Ld = 0.00002235f;
         motor->Lq = 0.00002567f;
+        motor->Ls = 0.00002567f;
     }
 
     // 2804云台电机
@@ -76,6 +83,7 @@ int motor_create(motor_t *motor)
         motor->polePairs = 7;
         motor->Rs = 1.9f;
         motor->Ld = 2.6f / 1000.0f;
+        motor->Ls = 2.6f / 1000.0f;
     }
 
     // 2806云台电机
@@ -86,6 +94,7 @@ int motor_create(motor_t *motor)
         motor->polePairs = 7;
         motor->Rs = 3.3f;
         motor->Ld = 2.6f / 1000.0f;
+        motor->Ls = 2.6f / 1000.0f;
     }
 
     // 3510云台电机
@@ -96,6 +105,7 @@ int motor_create(motor_t *motor)
         motor->polePairs = 11;
         motor->Rs = 7.8f;
         motor->Ld = 3.95f / 1000.0f;
+        motor->Ls = 3.95f / 1000.0f;
     }
 
     // 6824云台电机
@@ -106,6 +116,7 @@ int motor_create(motor_t *motor)
         motor->polePairs = 11;
         motor->Rs = 2.3613f;
         motor->Ld = 210.0f / 1e6f;
+        motor->Ls = 210.0f / 1e6f;
     }
 
     // 5010电机
@@ -116,6 +127,7 @@ int motor_create(motor_t *motor)
         motor->polePairs = 7;
         motor->Rs = 0.12f;
         motor->Ld = 50.0f / 1e6f;
+        motor->Ls = 50.0f / 1e6f;
     }
 
     /* 相电流低通滤波器初始化 */
@@ -124,12 +136,22 @@ int motor_create(motor_t *motor)
     lpf_init(&motor->icLpFilter, 1000.0f, 1.0f / 20e3f);
 
     /* 电流环PI参数 */
-    float kp = motor->Ld * 500;
-    float ki = motor->Rs * 500;
+    float kp = motor->Ls * 200;
+    float ki = motor->Rs * 200;
     float kd = 0;
     float upLimit = motor->VBus / SQRT3 * 0.9f; // uq
     pid_ctrl_init(&motor->idPid, kp, ki, 0, ki / kp, -upLimit, upLimit);
     pid_ctrl_init(&motor->iqPid, kp, ki, 0, ki / kp, -upLimit, upLimit);
+
+    /* 5、7次谐波电流提取 */
+    lpf_init(&motor->id5thLpf, 10.0f, 1.0f / 20000.0f);
+    lpf_init(&motor->iq5thLpf, 10.0f, 1.0f / 20000.0f);
+    lpf_init(&motor->id7thLpf, 10.0f, 1.0f / 20000.0f);
+    lpf_init(&motor->iq7thLpf, 10.0f, 1.0f / 20000.0f);
+    pid_ctrl_init(&motor->id5thPid, 4.0f, 0.7f, 0, 0.01f, -1000, 1000);
+    pid_ctrl_init(&motor->iq5thPid, 4.0f, 0.7f, 0, 0.01f, -1000, 1000);
+    pid_ctrl_init(&motor->id7thPid, 2.0f, 1.0f, 0, 0.01f, -1000, 1000);
+    pid_ctrl_init(&motor->iq7thPid, 2.0f, 1.0f, 0, 0.01f, -1000, 1000);
 
     /* 电机转速PI控制器初始化 */
     upLimit = 6.0f; // iq
@@ -1072,7 +1094,12 @@ int motor_ctrl_mode_loop(motor_t *motor)
         case MOTOR_CTRL_MODE_CURRENT:
         default:
         {
-            /* 1. Clark */
+            /* 抑制谐波电流 */
+            motor_detach_idq57th(motor); // 5、7次谐波电流提取
+            motor_ctrl_idq57th(motor); // 5、7次谐波电流控制
+            motor_convert_udq57th(motor); // 谐波电压变换
+
+            /* Clark, Get ialpha ibeta */
             foc_clark(motor->ia, motor->ib, &motor->ialpha, &motor->ibeta);
 
             /* HFI 位置、转速观测器 */
@@ -1120,10 +1147,13 @@ int motor_ctrl_mode_loop(motor_t *motor)
                 motor->cosTheta = arm_cos_f32(motor->theta);
             }
 
-            /* 2. Park */
+            /* Park, Get id iq */
             foc_park(motor->ialpha, motor->ibeta, motor->sinTheta, motor->cosTheta, &motor->id, &motor->iq);
 
-            /* 3. id, iq pid ctrl */
+            /* SMO */
+            motor_smo_calc_emf(motor);
+
+            /* id, iq pid ctrl */
             const float voltage_normalize = 1.5f / motor->VBus;
 
             /* HFI 提取基频信号 */
@@ -1199,9 +1229,9 @@ int motor_ctrl_mode_loop(motor_t *motor)
                 isDirChanged = !isDirChanged;
             }
 
-            /* 4. Inv park */
+            /* Inv park, Get ualpha ubeta */
             foc_inv_park(motor->ud, motor->uq, motor->sinTheta, motor->cosTheta, &motor->ualpha, &motor->ubeta);
-            /* 5. SVM */
+            /* SVM */
             ret = odriver_svm(motor->ualpha, motor->ubeta, &motor->ta, &motor->tb, &motor->tc, &motor->sector);
             if (ret)
             {
@@ -1278,19 +1308,38 @@ int motor_smo_calc_emf(motor_t *motor)
     if (motor == NULL)
         return -1;
 
-    /* 观测电流 */
-    motor->smoIalphaEst += (-(motor->Rs / motor->Ls) * motor->smoIalphaEst +
-                            (1.0f / motor->Ls) * (motor->ualpha - motor->smoEalpha));
-    motor->smoIbetaEst += (-(motor->Rs / motor->Ls) * motor->smoIbetaEst +
-                           (1.0f / motor->Ls) * (motor->ubeta - motor->smoEbeta));
+    const float LPF_GAIN = 0.23905722361f;
 
+    static float smoEalphaLast = 0, smoEbetaLast = 0;
+
+    float voltage_normalize = 1.5f / motor->VBus;
+    float rs_div_ls = motor->Rs / motor->Ls;
+    float one_div_ls = 1.0f / motor->Ls;
+
+    float ualpha = motor->ualpha / voltage_normalize;
+    float ubeta = motor->ubeta / voltage_normalize;
+
+    /* 计算Ialpha和Ibeta的估计值 */
+    motor->smoIalphaEst += (-rs_div_ls * motor->smoIalphaEst + one_div_ls * (ualpha - motor->smoEalpha)) * motor->pwmCycle;
+    motor->smoIbetaEst += (-rs_div_ls * motor->smoIbetaEst + one_div_ls * (ubeta - motor->smoEbeta)) * motor->pwmCycle;
+
+    /* 计算Ialpha和Ibeta的估计值与测量值的误差 */
     float ialphaErr = motor->smoIalphaEst - motor->ialpha;
     float ibetaErr = motor->smoIbetaEst - motor->ibeta;
 
-    /* 反电动势 */
+    /* 计算反电动势 */
+//    motor->smoEalpha = sat(ialphaErr, 0.5f) * motor->smoGain;
+//    motor->smoEbeta = sat(ibetaErr, 0.5f) * motor->smoGain;
     motor->smoEalpha = (float)sign(ialphaErr) * motor->smoGain;
     motor->smoEbeta = (float)sign(ibetaErr) * motor->smoGain;
 
+    /* 低通滤波 */
+//    motor->smoEalpha = lpf_work(&motor->smoLpfEalpha, motor->smoEalpha);
+//    motor->smoEbeta = lpf_work(&motor->smoLpfEbeta, motor->smoEbeta);
+    motor->smoEalpha = smoEalphaLast * LPF_GAIN + motor->smoEalpha * (1 - LPF_GAIN);
+    motor->smoEbeta = smoEbetaLast * LPF_GAIN + motor->smoEbeta * (1 - LPF_GAIN);
+    smoEalphaLast = motor->smoEalpha;
+    smoEbetaLast = motor->smoEbeta;
 
     return ret;
 }
@@ -1306,4 +1355,91 @@ int motor_smo_pll(motor_t *motor)
 
 
     return ret;
+}
+
+
+/**
+ *
+ * @param motor
+ * @return
+ */
+int motor_detach_idq57th(motor_t* motor)
+{
+    if (motor == NULL)
+        return -1;
+
+    float alpha, beta;
+
+    foc_clark(motor->ia, motor->ib, &alpha, &beta);
+    foc_park(alpha, beta, arm_sin_f32(motor->theta * -5), arm_cos_f32(motor->theta * -5), &motor->id5th, &motor->iq5th);
+    motor->id5th = lpf_work(&motor->id5thLpf, motor->id5th);
+    motor->iq5th = lpf_work(&motor->iq5thLpf, motor->iq5th);
+
+    foc_clark(motor->ia, motor->ib, &alpha, &beta);
+    foc_park(alpha, beta, arm_sin_f32(motor->theta * 7), arm_cos_f32(motor->theta * 7), &motor->id7th, &motor->iq7th);
+    motor->id7th = lpf_work(&motor->id7thLpf, motor->id7th);
+    motor->iq7th = lpf_work(&motor->iq7thLpf, motor->iq7th);
+
+    return 0;
+}
+
+/**
+ *
+ * @param motor
+ * @return
+ */
+int motor_ctrl_idq57th(motor_t* motor)
+{
+    if (motor == NULL)
+        return -1;
+
+    float we = motor->speedRpm * (float)M_PI / 30.0f;
+
+    /* 5次谐波 */
+    float id5thPidOutput, iq5thPidOutput;
+    float ud5 = 5 * we * motor->Lq * motor->iq5th + motor->Rs * motor->id5th;
+    float uq5 = -5 * we * motor->Ld * motor->id5th + motor->Rs * motor->iq5th;
+
+    pi_ctrl(&motor->id5thPid, 0 - motor->id5th, &id5thPidOutput);
+    pi_ctrl(&motor->iq5thPid, 0 - motor->iq5th, &iq5thPidOutput);
+
+    motor->ud5th = (id5thPidOutput * motor->Rs) + (iq5thPidOutput * we * 5 * motor->Ld) + ud5;
+    motor->uq5th = (iq5thPidOutput * motor->Rs) + (id5thPidOutput * we * -5 * motor->Ld) + uq5;
+
+    /* 7次谐波 */
+    float id7thPidOutput, iq7thPidOutput;
+    float ud7 = -7 * we * motor->Lq * motor->iq7th + motor->Rs * motor->id7th;
+    float uq7 = 7 * we * motor->Ld * motor->id7th + motor->Rs * motor->iq7th;
+
+    pi_ctrl(&motor->id7thPid, 0 - motor->id7th, &id7thPidOutput);
+    pi_ctrl(&motor->iq7thPid, 0 - motor->iq7th, &iq7thPidOutput);
+
+    motor->ud7th = (id7thPidOutput * motor->Rs) + (iq7thPidOutput * we * -7 * motor->Ld) + ud7;
+    motor->uq7th = (iq7thPidOutput * motor->Rs) + (id7thPidOutput * we * 7 * motor->Ld) + uq7;
+
+    return 0;
+}
+
+/**
+ *
+ * @param motor
+ * @return
+ */
+int motor_convert_udq57th(motor_t* motor)
+{
+    if (motor == NULL)
+        return -1;
+
+    float u5thalpha, u5thbeta;
+    float u7thalpha, u7thbeta;
+
+    foc_inv_park(motor->ud5th, motor->uq5th, arm_sin_f32(motor->theta * -5), arm_cos_f32(motor->theta * -5),
+                 &u5thalpha, &u5thbeta);
+    foc_inv_park(motor->ud7th, motor->uq7th, arm_sin_f32(motor->theta * 7), arm_cos_f32(motor->theta * 7),
+                 &u7thalpha, &u7thbeta);
+
+    motor->u57thAlpha = u5thalpha + u5thbeta;
+    motor->u57thBeta = u7thalpha + u7thbeta;
+
+    return 0;
 }

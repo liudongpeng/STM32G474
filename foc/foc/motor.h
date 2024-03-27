@@ -72,6 +72,13 @@ typedef struct motor
     float idRef, iqRef;
     int currentLoopFreq;
 
+    /* 5、7次谐波抑制 */
+    float u57thAlpha, u57thBeta;
+    float id5th, iq5th, id7th, iq7th;
+    float ud5th, uq5th, ud7th, uq7th;
+    lpf_t id5thLpf, iq5thLpf, id7thLpf, iq7thLpf;
+    pid_ctrl_t id5thPid, iq5thPid, id7thPid, iq7thPid;
+
     /* Speed loop param. */
     pid_ctrl_t speedPid;
     float speedRef, speedShadow;
@@ -87,6 +94,7 @@ typedef struct motor
     int positionLoopFreq, positionLoopCnt;
 
     /* PWM */
+    float pwmCycle;
     int timArr;
     float ta, tb, tc;
     int ccra, ccrb, ccrc;
@@ -116,13 +124,12 @@ typedef struct motor
     hfi_pll_t hfiPll;
     lpf_t hfiSpeedEstLpf;
 
-
     /* SMO */
     float smoGain;
-    float smoIalphaEst, smoIbetaEst, smoIalphabetaGain;
+    float smoIalphaEst, smoIbetaEst;
     float smoEalpha, smoEbeta;
     float smoTheta, smoThetaEst;
-    lpf_t smoLpfAlpha, smoLpfBeta;
+    lpf_t smoLpfEalpha, smoLpfEbeta;
 
     /* motor param */
     int polePairs;
@@ -197,6 +204,14 @@ int motor_hfi_pi_calc(motor_t* motor, float thetaErr);
 
 int motor_smo_calc_emf(motor_t* motor);
 int motor_smo_pll(motor_t* motor);
+
+
+
+
+
+int motor_detach_idq57th(motor_t* motor);
+int motor_ctrl_idq57th(motor_t* motor);
+int motor_convert_udq57th(motor_t* motor);
 
 
 #endif //FOC_MOTOR_H

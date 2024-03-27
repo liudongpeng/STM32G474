@@ -121,3 +121,20 @@ int sign(float val)
         return 0;
 
 }
+
+/**
+ *
+ * @param s
+ * @param delta
+ * @return
+ */
+float sat(float s, float delta)
+{
+    if (s > delta)
+        return 1;
+    else if (s < -delta)
+        return -1;
+    else
+        return s / delta;
+}
+

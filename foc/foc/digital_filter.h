@@ -34,8 +34,5 @@ typedef struct fir_low_pass_filter
 int lpf_init(lpf_t* filter, float fc, float dt);
 float lpf_work(lpf_t* filter, float val);
 
-int fir_lp_init(fir_lp_t* filter);
-int fir_lp_work(fir_lp_t* filter, float* input, float* output, int n);
-
 
 #endif //FOC_DIGITAL_FILTER_H

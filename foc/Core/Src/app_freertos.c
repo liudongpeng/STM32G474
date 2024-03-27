@@ -390,10 +390,10 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
             vfoaFrame.fdata[dataIndex++] = motor1.hfiIbeta;
             vfoaFrame.fdata[dataIndex++] = motor1.theta;
             vfoaFrame.fdata[dataIndex++] = motor1.hfiTheta;
-            vfoaFrame.fdata[dataIndex++] = motor1.hfiIalphaEnvelope;
-            vfoaFrame.fdata[dataIndex++] = motor1.hfiIbetaEnvelope;
-            vfoaFrame.fdata[dataIndex++] = motor1.speedRef;
-            vfoaFrame.fdata[dataIndex++] = motor1.hfiSpeedRpm;
+            vfoaFrame.fdata[dataIndex++] = motor1.id5th;
+            vfoaFrame.fdata[dataIndex++] = motor1.iq5th;
+            vfoaFrame.fdata[dataIndex++] = motor1.u57thAlpha;
+            vfoaFrame.fdata[dataIndex++] = motor1.u57thBeta;
 
             HAL_UART_Transmit_DMA(&huart3, (uint8_t *) (&vfoaFrame), sizeof(vfoaFrame));
 //        CDC_Transmit_FS((uint8_t *) (&vfoaFrame), sizeof(vfoaFrame));

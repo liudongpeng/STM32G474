@@ -173,18 +173,13 @@
   }
 }</component>
   <component name="RunManager" selected="OpenOCD Download &amp; Run.foc.elf">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="foc.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="foc" TARGET_NAME="foc.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="foc" RUN_TARGET_NAME="foc.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="foc.elf" type="com.jetbrains.cidr.embedded.openocd.conf.type" factoryName="com.jetbrains.cidr.embedded.openocd.conf.factory" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="foc" TARGET_NAME="foc.elf" CONFIG_NAME="Debug" version="1" RUN_TARGET_PROJECT_NAME="foc" RUN_TARGET_NAME="foc.elf">
-      <openocd version="1" gdb-port="3333" telnet-port="4444" board-config="C:\Users\LiuDongPeng\Desktop\g474\daplink.cfg" reset-type="INIT" download-type="UPDATED_ONLY">
+      <openocd version="1" gdb-port="3333" telnet-port="4444" board-config="C:\Users\LiuDongPeng\Desktop\g474\stlink.cfg" reset-type="INIT" download-type="UPDATED_ONLY">
         <debugger kind="GDB" isBundled="true" />
       </openocd>
       <method v="2">
@@ -294,7 +289,13 @@
       <workItem from="1710687708580" duration="53000" />
       <workItem from="1710688478277" duration="347000" />
       <workItem from="1710765259970" duration="1796000" />
-      <workItem from="1710850973803" duration="4510000" />
+      <workItem from="1710850973803" duration="4596000" />
+      <workItem from="1711266652196" duration="12726000" />
+      <workItem from="1711370064691" duration="1257000" />
+      <workItem from="1711451791297" duration="2678000" />
+      <workItem from="1711537267122" duration="3641000" />
+      <workItem from="1711541716842" duration="224000" />
+      <workItem from="1711541949209" duration="5376000" />
     </task>
     <servers />
   </component>
